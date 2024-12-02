@@ -184,3 +184,9 @@ Q.idea/sonarlint/securityhotspotstore/d/8/d8cd1941977647c3e60fdb0b37af43bc2e90a2
 Q.idea/sonarlint/securityhotspotstore/3/8/383be577781834c0b742430d3807325402e7c173,2\1\21df76955bf22b88eec14a2a007cb3d95397a5ec
 Å
 Q.idea/sonarlint/securityhotspotstore/3/9/39d87403ed074a2cd3eaf1b2a9c558bfed4a1986,6\2\6225627ee320e068b33be0101fda06cbc49c3e0e
+m
+=src/main/java/org/ems/demo/exception/DepartmentException.java,3\1\31b7e55f232be44a0cef94d22c35ad9a5dded4a6
+k
+;src/main/java/org/ems/demo/exception/EmployeeException.java,3\d\3d45e05a65b6be8f3123f1034efda55ee7f1dda9
+g
+7src/main/java/org/ems/demo/exception/RoleException.java,3\b\3ba0f0b69f5750d5892161e155780671d5b13b2e

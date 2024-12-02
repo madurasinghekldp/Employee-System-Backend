@@ -9,10 +9,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private String failedStatus = "Failed";
+    private final String failedStatus = "Failed";
 
-    @ExceptionHandler(DepartmentNotFoundException.class)
-    ResponseEntity<ErrorResponse> handleDepartmentNotFoundException(DepartmentNotFoundException ex){
+    @ExceptionHandler(DepartmentException.class)
+    ResponseEntity<ErrorResponse> handleDepartmentException(DepartmentException ex){
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(failedStatus)
                 .message(ex.getMessage())
@@ -20,8 +20,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.ok().body(errorResponse);
     }
 
-    @ExceptionHandler(RoleNotFoundException.class)
-    ResponseEntity<ErrorResponse> handleRoleNotFoundException(RoleNotFoundException ex){
+    @ExceptionHandler(RoleException.class)
+    ResponseEntity<ErrorResponse> handleRoleException(RoleException ex){
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(failedStatus)
                 .message(ex.getMessage())
@@ -29,8 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.ok().body(errorResponse);
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    ResponseEntity<ErrorResponse> handleEmployeeNotFoundException(EmployeeNotFoundException ex){
+    @ExceptionHandler(EmployeeException.class)
+    ResponseEntity<ErrorResponse> handleEmployeeException(EmployeeException ex){
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(failedStatus)
                 .message(ex.getMessage())

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Department;
 import org.ems.demo.entity.DepartmentEntity;
-import org.ems.demo.exception.DepartmentNotFoundException;
+import org.ems.demo.exception.DepartmentException;
 import org.ems.demo.repository.DepartmentNativeRepository;
 import org.ems.demo.repository.DepartmentRepository;
 import org.ems.demo.service.DepartmentService;
@@ -31,7 +31,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getAll() {
         Iterable<DepartmentEntity> all = repository.findAll();
-        if(((Collection<?>) all).isEmpty()) throw new DepartmentNotFoundException("Departments are not found");
+        if(((Collection<?>) all).isEmpty()) throw new DepartmentException("Departments are not found");
         List<Department> depList = new ArrayList<>();
         all.forEach(dep->{
             depList.add(mapper.convertValue(dep, Department.class));
@@ -42,7 +42,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getAllSelected(String l, String o) {
         List<DepartmentEntity> selected = nativeRepository.getSelected(l, o);
-        if(selected.isEmpty()) throw new DepartmentNotFoundException("Departments are not found");
+        if(selected.isEmpty()) throw new DepartmentException("Departments are not found");
         List<Department> depList = new ArrayList<>();
         selected.forEach(dep->{
             depList.add(mapper.convertValue(dep, Department.class));
@@ -59,7 +59,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             repository.save(existingDepartment);
         }
         else{
-            throw new DepartmentNotFoundException("Department is not found!");
+            throw new DepartmentException("Department is not found!");
         }
     }
 
@@ -69,7 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             repository.deleteById(id);
         }
         else{
-            throw new DepartmentNotFoundException("Department is not found!");
+            throw new DepartmentException("Department is not found!");
         }
     }
 }

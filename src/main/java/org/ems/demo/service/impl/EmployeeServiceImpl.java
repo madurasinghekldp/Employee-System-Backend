@@ -8,7 +8,7 @@ import org.ems.demo.dto.Role;
 import org.ems.demo.entity.DepartmentEntity;
 import org.ems.demo.entity.EmployeeEntity;
 import org.ems.demo.entity.RoleEntity;
-import org.ems.demo.exception.EmployeeNotFoundException;
+import org.ems.demo.exception.EmployeeException;
 import org.ems.demo.repository.EmployeeNativeRepository;
 import org.ems.demo.repository.EmployeeRepository;
 import org.ems.demo.service.EmployeeService;
@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllSelected(String l, String o) {
         List<EmployeeEntity> selected = nativeRepository.getSelected(l,o);
-        if(selected.isEmpty()) throw new EmployeeNotFoundException("Employees are not found!");
+        if(selected.isEmpty()) throw new EmployeeException("Employees are not found!");
         List<Employee> empList = new ArrayList<>();
         selected.forEach(emp->{
             Department department = mapper.convertValue(emp.getDepartment(), Department.class);
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             repository.save(existingEmployee);
         }
         else{
-            throw new EmployeeNotFoundException("Employee is not found!");
+            throw new EmployeeException("Employee is not found!");
         }
     }
 
@@ -69,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             repository.deleteById(id);
         }
         else{
-            throw new EmployeeNotFoundException("Employee is not found!");
+            throw new EmployeeException("Employee is not found!");
         }
     }
 }

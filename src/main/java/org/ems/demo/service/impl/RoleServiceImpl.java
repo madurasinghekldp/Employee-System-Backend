@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Role;
 import org.ems.demo.entity.RoleEntity;
-import org.ems.demo.exception.RoleNotFoundException;
+import org.ems.demo.exception.RoleException;
 import org.ems.demo.repository.RoleNativeRepository;
 import org.ems.demo.repository.RoleRepository;
 import org.ems.demo.service.RoleService;
@@ -31,7 +31,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getAllSelected(String l, String o) {
         List<RoleEntity> selected = nativeRepository.getAllSelected(l,o);
-        if(selected.isEmpty()) throw new RoleNotFoundException("Roles are not found");
+        if(selected.isEmpty()) throw new RoleException("Roles are not found");
         List<Role> roleList = new ArrayList<>();
         selected.forEach(role->{
             roleList.add(mapper.convertValue(role, Role.class));
@@ -48,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
             repository.save(existingRole);
         }
         else{
-            throw new RoleNotFoundException("Role is not found!");
+            throw new RoleException("Role is not found!");
         }
     }
 
@@ -58,14 +58,14 @@ public class RoleServiceImpl implements RoleService {
             repository.deleteById(id);
         }
         else{
-            throw new RoleNotFoundException("Role is not found!");
+            throw new RoleException("Role is not found!");
         }
     }
 
     @Override
     public List<Role> getAll() {
         Iterable<RoleEntity> all = repository.findAll();
-        if(((Collection<?>) all).isEmpty()) throw new RoleNotFoundException("Roles are not found");
+        if(((Collection<?>) all).isEmpty()) throw new RoleException("Roles are not found");
         List<Role> roleList = new ArrayList<>();
         all.forEach(
                 role->{
