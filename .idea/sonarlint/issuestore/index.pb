@@ -41,16 +41,10 @@ x
 Hsrc/main/java/org/ems/demo/repository/impl/RoleNativeRepositoryImpl.java,a\6\a6323f685130b7c76a2010faed639a3402231902
 p
 @src/main/java/org/ems/demo/exception/GlobalExceptionHandler.java,1\6\165834c44ea250858a730b3ed4eaa8ffdb8b5feb
-u
-Esrc/main/java/org/ems/demo/exception/DepartmentNotFoundException.java,2\e\2ed5ec9d76c6aca2fadf6820746bc59578c473ce
-o
-?src/main/java/org/ems/demo/exception/RoleNotFoundException.java,3\8\383be577781834c0b742430d3807325402e7c173
 a
 1src/main/java/org/ems/demo/dto/ErrorResponse.java,1\5\15117797abaac1749ce6c5416fbfe07fa5b0329d
 c
 3src/main/java/org/ems/demo/dto/SuccessResponse.java,c\7\c765cf3ea4877199913eb55dc33f78f3e024c799
-s
-Csrc/main/java/org/ems/demo/exception/EmployeeNotFoundException.java,4\e\4e75e7bada8ccb5c0316fc65d574e2dd1f26abc6
 g
 7src/main/java/org/ems/demo/service/EmployeeService.java,2\d\2db59b4a802476d648d913a93344011431637971
 s

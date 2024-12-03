@@ -24,6 +24,6 @@ public class DepartmentEntity {
     private String description;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference(value = "department-employee")
     private List<EmployeeEntity> employees;
 }

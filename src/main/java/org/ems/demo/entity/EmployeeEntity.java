@@ -24,11 +24,11 @@ public class EmployeeEntity {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    @JsonBackReference
+    @JsonBackReference(value = "department-employee")
     private DepartmentEntity department;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @JsonBackReference
+    @JsonBackReference(value = "role-employee")
     private RoleEntity role;
 }
