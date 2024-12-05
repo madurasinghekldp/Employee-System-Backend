@@ -82,8 +82,6 @@ Q.idea/sonarlint/securityhotspotstore/d/9/d9a973c7c79cdaa0782b8a121bb5feda831bd2
 Å
 Q.idea/sonarlint/securityhotspotstore/4/7/47ca39a5bb6748b6c0c369904b589f7d00db756d,0\0\00bd18d863446a1ddd9fbc2518b10e9f1516c68f
 w
-G.idea/sonarlint/issuestore/4/e/4e75e7bada8ccb5c0316fc65d574e2dd1f26abc6,8\4\8434dd62f23106fb7fa3d9883fb1cf0982b6ae8b
-w
 G.idea/sonarlint/issuestore/7/2/7231ed80f089d001a392fa53dd4b304311e1d1ee,a\0\a068a24a1255ac72b2bef6c8fa298245259c6c5d
 Å
 Q.idea/sonarlint/securityhotspotstore/1/d/1d78501f86922c9009d28c7a10cf0355e90218c4,9\6\9612947b466423ae9e12e5feeceb280de3061155
@@ -138,16 +136,8 @@ w
 G.idea/sonarlint/issuestore/2/d/2db59b4a802476d648d913a93344011431637971,1\f\1fa0caff9007b7a2fba79f0a686d1c486deb0c73
 Å
 Q.idea/sonarlint/securityhotspotstore/9/8/98965a8f6a63684e7517c097db5b674e04b12c9a,a\8\a81d49f899d52340114a41942621a7d0cc120a6b
-Å
-Q.idea/sonarlint/securityhotspotstore/2/e/2ed5ec9d76c6aca2fadf6820746bc59578c473ce,9\0\903073f1149dde9cb88d7f5e3187f70088450ded
-Å
-Q.idea/sonarlint/securityhotspotstore/4/e/4e75e7bada8ccb5c0316fc65d574e2dd1f26abc6,2\4\249d101046005ecca2e27239c4007cbb8a6c2f97
-w
-G.idea/sonarlint/issuestore/2/e/2ed5ec9d76c6aca2fadf6820746bc59578c473ce,0\f\0fdf6436070e97c9d3a54bea385a39b6ba2cbb81
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-w
-G.idea/sonarlint/issuestore/3/8/383be577781834c0b742430d3807325402e7c173,e\8\e835f89ece2133c939cfaa6ea58f12fe15aa3dc7
 w
 G.idea/sonarlint/issuestore/3/8/38a6f30fe83da10e63445c0a99ef17839f599749,6\0\6036ab3f02b69439c41ddad56258d48600c0ec2a
 7
@@ -174,8 +164,6 @@ Q.idea/sonarlint/securityhotspotstore/1/4/1440dd838335895c05328ed9838dc019c4c9df
 Q.idea/sonarlint/securityhotspotstore/3/8/38a6f30fe83da10e63445c0a99ef17839f599749,7\e\7e4c877454338402a9828795a96d7c06543b9ae5
 Å
 Q.idea/sonarlint/securityhotspotstore/d/8/d8cd1941977647c3e60fdb0b37af43bc2e90a230,5\3\53f9b4dd60b3f97396ed93356f6adb65f007e270
-Å
-Q.idea/sonarlint/securityhotspotstore/3/8/383be577781834c0b742430d3807325402e7c173,2\1\21df76955bf22b88eec14a2a007cb3d95397a5ec
 Å
 Q.idea/sonarlint/securityhotspotstore/3/9/39d87403ed074a2cd3eaf1b2a9c558bfed4a1986,6\2\6225627ee320e068b33be0101fda06cbc49c3e0e
 m

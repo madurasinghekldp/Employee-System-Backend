@@ -24,8 +24,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department createDep(Department department) {
-        DepartmentEntity saved = repository.save(mapper.convertValue(department, DepartmentEntity.class));
-        return mapper.convertValue(saved, Department.class);
+
+        try{
+            DepartmentEntity saved = repository.save(mapper.convertValue(department, DepartmentEntity.class));
+            return mapper.convertValue(saved, Department.class);
+        }
+        catch(Exception e){
+            throw new DepartmentException("Department is not added!");
+        }
     }
 
     @Override

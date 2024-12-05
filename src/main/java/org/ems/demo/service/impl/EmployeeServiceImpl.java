@@ -27,8 +27,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee create(Employee employee) {
-        EmployeeEntity saved = repository.save(mapper.convertValue(employee,EmployeeEntity.class));
-        return mapper.convertValue(saved,Employee.class);
+
+        try{
+            EmployeeEntity saved = repository.save(mapper.convertValue(employee,EmployeeEntity.class));
+            return mapper.convertValue(saved,Employee.class);
+        }
+        catch(Exception e){
+            throw new EmployeeException("Employee is not added!");
+        }
     }
 
     @Override

@@ -24,8 +24,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role createRole(Role role) {
-        RoleEntity saved = repository.save(mapper.convertValue(role, RoleEntity.class));
-        return mapper.convertValue(saved, Role.class);
+
+        try{
+            RoleEntity saved = repository.save(mapper.convertValue(role, RoleEntity.class));
+            return mapper.convertValue(saved, Role.class);
+        }
+        catch(Exception e){
+            throw new RoleException("Role is not added");
+        }
     }
 
     @Override
