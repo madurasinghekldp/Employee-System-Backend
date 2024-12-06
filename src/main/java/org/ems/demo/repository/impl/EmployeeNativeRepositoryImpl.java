@@ -19,13 +19,14 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
     private final ModelMapper mapper;
 
     @Override
-    public List<EmployeeEntity> getSelected(String l, String o) {
+    public List<EmployeeEntity> getSelected(String l, String o, String s) {
         String sql = """
                 select e.*, d.id as department_id, d.name as department_name, d.description as department_description
                 , r.id as role_id, r.name as role_name, r.description as role_description\s
                 from employee e\s
                 left join department d on e.department_id = d.id\s
                 left join role r on e.role_id = r.id\s
+                where e.email like ? or e.id like ? or e.first_name like ? or e.last_name like ?\s
                 order by e.id desc limit ? offset ?
                 """;
         int limit = Integer.parseInt(l);
@@ -55,6 +56,6 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                     );
                 },
 
-                limit, offset);
+                "%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%", limit, offset);
     }
 }

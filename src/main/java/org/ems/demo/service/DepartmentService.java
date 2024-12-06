@@ -9,7 +9,7 @@ public interface DepartmentService {
 
     List<Department> getAll();
 
-    List<Department> getAllSelected(String l, String o);
+    List<Department> getAllSelected(String l, String o, String s);
 
     void updateDep(Department department);
 

@@ -46,8 +46,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> getAllSelected(String l, String o) {
-        List<DepartmentEntity> selected = nativeRepository.getSelected(l, o);
+    public List<Department> getAllSelected(String l, String o, String s) {
+        List<DepartmentEntity> selected = nativeRepository.getSelected(l, o, s);
         if(selected.isEmpty()) throw new DepartmentException("Departments are not found");
         List<Department> depList = new ArrayList<>();
         selected.forEach(dep->{

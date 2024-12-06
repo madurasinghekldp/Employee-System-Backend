@@ -38,8 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllSelected(String l, String o) {
-        List<EmployeeEntity> selected = nativeRepository.getSelected(l,o);
+    public List<Employee> getAllSelected(String l, String o, String s) {
+        List<EmployeeEntity> selected = nativeRepository.getSelected(l,o,s);
         if(selected.isEmpty()) throw new EmployeeException("Employees are not found!");
         List<Employee> empList = new ArrayList<>();
         selected.forEach(emp->{

@@ -7,7 +7,7 @@ import java.util.List;
 public interface RoleService {
     Role createRole(Role role);
 
-    List<Role> getAllSelected(String l, String o);
+    List<Role> getAllSelected(String l, String o, String s);
 
     void updateRole(Role role);
 

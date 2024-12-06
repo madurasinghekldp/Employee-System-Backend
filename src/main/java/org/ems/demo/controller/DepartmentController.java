@@ -39,11 +39,12 @@ public class DepartmentController {
     @GetMapping("/all-selected")
     public ResponseEntity<SuccessResponse> getAllDepsSelected(
             @RequestParam(name="limit") String l,
-            @RequestParam(name="offset") String o
+            @RequestParam(name="offset") String o,
+            @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
-                .data(departmentService.getAllSelected(l,o))
+                .data(departmentService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

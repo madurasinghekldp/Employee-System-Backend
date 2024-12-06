@@ -38,11 +38,12 @@ public class RoleController {
     @GetMapping("/all-selected")
     public ResponseEntity<SuccessResponse> getAllRolesSelected(
             @RequestParam(name="limit") String l,
-            @RequestParam(name="offset") String o
+            @RequestParam(name="offset") String o,
+            @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
-                .data(roleService.getAllSelected(l,o))
+                .data(roleService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

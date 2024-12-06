@@ -35,8 +35,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAllSelected(String l, String o) {
-        List<RoleEntity> selected = nativeRepository.getAllSelected(l,o);
+    public List<Role> getAllSelected(String l, String o, String s) {
+        List<RoleEntity> selected = nativeRepository.getAllSelected(l,o,s);
         if(selected.isEmpty()) throw new RoleException("Roles are not found");
         List<Role> roleList = new ArrayList<>();
         selected.forEach(role->{

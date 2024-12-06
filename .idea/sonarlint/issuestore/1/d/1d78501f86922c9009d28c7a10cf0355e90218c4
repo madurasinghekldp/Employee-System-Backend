@@ -1,7 +1,7 @@
 
 “
-java:S3655>"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(‘‘ª•8ÕÈë“¹2J$c3b5136e-6576-4628-81af-c8970fe203e1
+java:S3655>"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(‘‘ª•8ÕÈë“¹2J$5f6b3367-114a-4ccc-8f9a-ef2b66ad6684
 t
-java:S1602*",Remove useless curly braces around statement(è‘Äûÿÿÿÿ8âÈë“¹2J$34cdea52-8492-4a84-bcac-4593408313ab
+java:S1602*",Remove useless curly braces around statement(è‘Äûÿÿÿÿ8âÈë“¹2J$9c5bd338-25eb-4b50-a39e-d53191cc3572
 t
-java:S16025",Remove useless curly braces around statement(Ò…º¯øÿÿÿÿ8çÈë“¹2J$693c3d22-70ad-4a49-a57b-ceb381550e56
+java:S16025",Remove useless curly braces around statement(Ò…º¯øÿÿÿÿ8çÈë“¹2J$4abb1372-f117-4b75-83b8-085cc4c79529

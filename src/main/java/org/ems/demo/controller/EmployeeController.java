@@ -29,11 +29,12 @@ public class EmployeeController {
     @GetMapping("/all-selected")
     public ResponseEntity<SuccessResponse> getAllEmpsSelected(
             @RequestParam(name="limit") String l,
-            @RequestParam(name="offset") String o
+            @RequestParam(name="offset") String o,
+            @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
-                .data(employeeService.getAllSelected(l,o))
+                .data(employeeService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

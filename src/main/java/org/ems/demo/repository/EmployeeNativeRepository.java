@@ -4,5 +4,5 @@ import org.ems.demo.entity.EmployeeEntity;
 import java.util.List;
 
 public interface EmployeeNativeRepository {
-    List<EmployeeEntity> getSelected(String l, String o);
+    List<EmployeeEntity> getSelected(String l, String o, String s);
 }
