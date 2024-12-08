@@ -56,13 +56,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void updateEmp(Employee employee) {
         if(repository.existsById(employee.getId())){
-            EmployeeEntity existingEmployee = repository.findById(employee.getId()).get();
-            existingEmployee.setFirstName(employee.getFirstName());
-            existingEmployee.setLastName(employee.getLastName());
-            existingEmployee.setEmail(employee.getEmail());
-            existingEmployee.setRole(mapper.convertValue(employee.getRole(), RoleEntity.class));
-            existingEmployee.setDepartment(mapper.convertValue(employee.getDepartment(), DepartmentEntity.class));
-            repository.save(existingEmployee);
+            try{
+                EmployeeEntity existingEmployee = repository.findById(employee.getId()).get();
+                existingEmployee.setFirstName(employee.getFirstName());
+                existingEmployee.setLastName(employee.getLastName());
+                existingEmployee.setEmail(employee.getEmail());
+                existingEmployee.setRole(mapper.convertValue(employee.getRole(), RoleEntity.class));
+                existingEmployee.setDepartment(mapper.convertValue(employee.getDepartment(), DepartmentEntity.class));
+                repository.save(existingEmployee);
+            }
+            catch(Exception e){
+                throw new EmployeeException("Employee is not updated!");
+            }
         }
         else{
             throw new EmployeeException("Employee is not found!");

@@ -48,10 +48,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRole(Role role) {
         if(repository.existsById(role.getId())){
-            RoleEntity existingRole = repository.findById(role.getId()).get();
-            existingRole.setName(role.getName());
-            existingRole.setDescription(role.getDescription());
-            repository.save(existingRole);
+            try{
+                RoleEntity existingRole = repository.findById(role.getId()).get();
+                existingRole.setName(role.getName());
+                existingRole.setDescription(role.getDescription());
+                repository.save(existingRole);
+            }
+            catch(Exception e){
+                throw new RoleException("Role is not updated!");
+            }
         }
         else{
             throw new RoleException("Role is not found!");
