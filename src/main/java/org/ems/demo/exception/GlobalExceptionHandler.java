@@ -37,4 +37,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return ResponseEntity.ok().body(errorResponse);
     }
+
+    @ExceptionHandler(UserException.class)
+    ResponseEntity<ErrorResponse> handleUserException(UserException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.ok().body(errorResponse);
+    }
 }

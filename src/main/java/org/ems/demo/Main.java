@@ -1,11 +1,32 @@
 package org.ems.demo;
 
+import org.ems.demo.entity.UserRoleEntity;
+import org.ems.demo.repository.UserRoleRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class);
+    }
+
+    @Bean
+    CommandLineRunner initializeRoles(UserRoleRepository userRoleRepository) {
+        return args -> {
+            // Check and add ROLE_USER
+            if (userRoleRepository.findByName("ROLE_USER").isEmpty()) {
+                UserRoleEntity userRoleEntity = new UserRoleEntity().setName("ROLE_USER");
+                userRoleRepository.save(userRoleEntity);
+            }
+
+            // Check and add ROLE_ADMIN
+            if (userRoleRepository.findByName("ROLE_ADMIN").isEmpty()) {
+                UserRoleEntity adminUserRoleEntity = new UserRoleEntity().setName("ROLE_ADMIN");
+                userRoleRepository.save(adminUserRoleEntity);
+            }
+        };
     }
 }
