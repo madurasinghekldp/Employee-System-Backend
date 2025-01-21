@@ -3,21 +3,23 @@ package org.ems.demo.controller;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Employee;
 import org.ems.demo.dto.SuccessResponse;
+import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("emp")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/emp")
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
     private String successStatus = "Success";
 
     @PostMapping
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createEmp(@RequestBody Employee employee){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
@@ -27,6 +29,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/all-selected")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllEmpsSelected(
             @RequestParam(name="limit") String l,
             @RequestParam(name="offset") String o,
@@ -40,6 +43,7 @@ public class EmployeeController {
     }
 
     @PutMapping
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<SuccessResponse> updateEmp(@RequestBody Employee employee){
         employeeService.updateEmp(employee);
@@ -50,6 +54,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping
+    @PermissionRequired(values = {"ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<SuccessResponse> deleteEmpById(@RequestParam(name="id") Long id){
         employeeService.deleteEmp(id);

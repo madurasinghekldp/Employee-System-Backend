@@ -3,21 +3,23 @@ package org.ems.demo.controller;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Role;
 import org.ems.demo.dto.SuccessResponse;
+import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.RoleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
-@RequestMapping("role")
+@RequestMapping("/role")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
 public class RoleController {
 
     private final RoleService roleService;
     private String successStatus = "Success";
 
     @PostMapping
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createRole(@RequestBody Role role){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
@@ -27,6 +29,7 @@ public class RoleController {
     }
 
     @GetMapping("/all")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllRoles(){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .status(successStatus)
@@ -36,6 +39,7 @@ public class RoleController {
     }
 
     @GetMapping("/all-selected")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllRolesSelected(
             @RequestParam(name="limit") String l,
             @RequestParam(name="offset") String o,
@@ -49,6 +53,7 @@ public class RoleController {
     }
 
     @PutMapping
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<SuccessResponse> updateRole(@RequestBody Role role){
         roleService.updateRole(role);
@@ -59,6 +64,7 @@ public class RoleController {
     }
 
     @DeleteMapping
+    @PermissionRequired(values = {"ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<SuccessResponse> deleteRole(@RequestParam(name="id") Long id){
         roleService.deleteRole(id);

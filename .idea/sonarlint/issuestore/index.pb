@@ -174,8 +174,6 @@ g
 7src/main/java/org/ems/demo/exception/RoleException.java,3\b\3ba0f0b69f5750d5892161e155780671d5b13b2e
 i
 9src/main/java/org/ems/demo/repository/UserRepository.java,8\3\834a8359fd643c6020e7fb4e0a9e1116026d3caf
-[
-+src/main/java/org/ems/demo/entity/User.java,3\4\34ec68fa88189cc37631104688a5031b21ae80d4
 o
 ?src/main/java/org/ems/demo/config/ApplicationConfiguration.java,0\1\011a1359a0312b3b4b1b0a009c20496eeb34b25d
 n
@@ -192,8 +190,6 @@ a
 0src/main/java/org/ems/demo/dto/LoginUserDto.java,7\7\77baf0d69b033ea08455d928f86a5a74721c56a0
 c
 3src/main/java/org/ems/demo/dto/RegisterUserDto.java,3\6\36b990e4a339270eb237899569a9032178db7980
-_
-/src/main/java/org/ems/demo/entity/UserRole.java,6\d\6d193fbac1d59a74f3d803803005c38fbed25882
 m
 =src/main/java/org/ems/demo/service/AuthenticationService.java,2\d\2d17a4a20d8d7a53f77e064b7f41af9e18438332
 c
@@ -212,3 +208,7 @@ h
 8src/main/java/org/ems/demo/security/RoleCheckAspect.java,8\e\8effb754e29e90f56ff3562c0f8a6b129d574f52
 k
 ;src/main/java/org/ems/demo/security/PermissionRequired.java,d\1\d180ba27c5b6c78b90535e3183a87f92a0b10c9b
+[
++src/main/java/org/ems/demo/dto/Company.java,d\8\d884f1aa55259917bb9917ee430c8bde72ef0960
+d
+4src/main/java/org/ems/demo/entity/CompanyEntity.java,2\e\2e0c6815406de5c917d659581b1de721d01e1e2e

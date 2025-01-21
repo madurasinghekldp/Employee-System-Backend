@@ -26,4 +26,9 @@ public class DepartmentEntity {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "department-employee")
     private List<EmployeeEntity> employees;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    @JsonBackReference(value = "company-department")
+    private CompanyEntity company;
 }

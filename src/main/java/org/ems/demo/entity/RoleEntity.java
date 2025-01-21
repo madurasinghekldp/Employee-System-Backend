@@ -1,5 +1,6 @@
 package org.ems.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,9 @@ public class RoleEntity {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "role-employee")
     private List<EmployeeEntity> roles;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    @JsonBackReference(value = "company-role")
+    private CompanyEntity company;
 }

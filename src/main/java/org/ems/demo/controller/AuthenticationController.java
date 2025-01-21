@@ -11,9 +11,9 @@ import org.ems.demo.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//@CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/auth")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
     private final JwtService jwtService;
 
