@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,9 +24,9 @@ public class DepartmentEntity {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "department-employee")
-    private List<EmployeeEntity> employees;
+//    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference(value = "department-employee")
+//    private List<EmployeeEntity> employees;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

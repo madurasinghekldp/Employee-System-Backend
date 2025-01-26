@@ -7,12 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString//(exclude = {"users", "departments", "roles", "employees"})
 @Entity
 @Table(name="company")
 public class CompanyEntity {
@@ -21,6 +22,8 @@ public class CompanyEntity {
     private Long id;
     private String name;
     private String address;
+
+    @Column(unique = true)
     private String registerNumber;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -30,4 +33,12 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "company-role")
     private List<RoleEntity> roles;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "company-user")
+    private List<UserEntity> users;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "company-employee")
+    private List<EmployeeEntity> employees;
 }

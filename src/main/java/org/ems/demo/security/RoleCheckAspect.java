@@ -32,7 +32,7 @@ public class RoleCheckAspect {
                 .anyMatch(userRoles::contains);
 
         if (!hasRequiredRole) {
-            throw new AccessDeniedException("User does not have the required role(s)");
+            throw new AccessDeniedException("User does not have the required permission(s)");
         }
     }
 }

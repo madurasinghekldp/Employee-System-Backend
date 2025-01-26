@@ -31,8 +31,7 @@ public class RoleNativeRepositoryImpl implements RoleNativeRepository {
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("description"),
-                        null,
-                        null
+                        null,null
                 ),
                 "%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
         );

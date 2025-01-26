@@ -31,7 +31,6 @@ public class DepartmentNativeRepositoryImpl implements DepartmentNativeRepositor
                         rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("description"),
-                        null,
                         null
                 ),
                 "%"+s+"%","%"+s+"%","%"+s+"%", limit, offset

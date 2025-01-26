@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class DepartmentController {
 
     private final DepartmentService departmentService;
-    private String successStatus = "Success";
+    //private String successStatus = "Success";
 
     @PostMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createDep(@RequestBody Department department){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(departmentService.createDep(department))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -33,7 +33,7 @@ public class DepartmentController {
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllDep(){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(departmentService.getAll())
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -47,7 +47,7 @@ public class DepartmentController {
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(departmentService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -59,7 +59,7 @@ public class DepartmentController {
     public ResponseEntity<SuccessResponse> updateDep(@RequestBody Department department){
         departmentService.updateDep(department);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -70,7 +70,7 @@ public class DepartmentController {
     public ResponseEntity<SuccessResponse> deleteDepById(@RequestParam(name="id") Long id){
         departmentService.deleteDep(id);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

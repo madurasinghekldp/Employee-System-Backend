@@ -25,7 +25,7 @@ public class RoleEntity {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "role-employee")
-    private List<EmployeeEntity> roles;
+    private List<EmployeeEntity> employees;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

@@ -10,19 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/emp")
 @RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private String successStatus = "Success";
+    //private final String successStatus = "Success";
 
     @PostMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createEmp(@RequestBody Employee employee){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(employeeService.create(employee))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -36,7 +36,7 @@ public class EmployeeController {
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(employeeService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -48,7 +48,7 @@ public class EmployeeController {
     public ResponseEntity<SuccessResponse> updateEmp(@RequestBody Employee employee){
         employeeService.updateEmp(employee);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -59,7 +59,7 @@ public class EmployeeController {
     public ResponseEntity<SuccessResponse> deleteEmpById(@RequestParam(name="id") Long id){
         employeeService.deleteEmp(id);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

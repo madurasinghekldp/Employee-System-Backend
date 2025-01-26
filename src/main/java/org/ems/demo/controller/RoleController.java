@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
     private final RoleService roleService;
-    private String successStatus = "Success";
+    //private String successStatus = "Success";
 
     @PostMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createRole(@RequestBody Role role){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(roleService.createRole(role))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -32,7 +32,7 @@ public class RoleController {
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllRoles(){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(roleService.getAll())
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -46,7 +46,7 @@ public class RoleController {
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .data(roleService.getAllSelected(l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
@@ -58,7 +58,7 @@ public class RoleController {
     public ResponseEntity<SuccessResponse> updateRole(@RequestBody Role role){
         roleService.updateRole(role);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -69,7 +69,7 @@ public class RoleController {
     public ResponseEntity<SuccessResponse> deleteRole(@RequestParam(name="id") Long id){
         roleService.deleteRole(id);
         SuccessResponse successResponse = SuccessResponse.builder()
-                .status(successStatus)
+                //.status(successStatus)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

@@ -1,6 +1,7 @@
 package org.ems.demo.controller;
 
 
+import org.ems.demo.dto.SuccessResponse;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,15 +24,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/me")
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<UserEntity> authenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        UserEntity currentUserEntity = (UserEntity) authentication.getPrincipal();
-
-        return ResponseEntity.ok(currentUserEntity);
-    }
+//    @GetMapping("/by-email")
+//    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+//    public ResponseEntity<UserEntity> authenticatedUser(@RequestParam(name = "email") String email) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        UserEntity currentUserEntity = (UserEntity) authentication.getPrincipal();
+//
+//        return ResponseEntity.ok(currentUserEntity);
+//    }
 
     @GetMapping()
     @PermissionRequired(values = {"ROLE_ADMIN"})
@@ -38,5 +40,14 @@ public class UserController {
         List <UserEntity> userEntities = userService.allUsers();
 
         return ResponseEntity.ok(userEntities);
+    }
+
+    @GetMapping("/by-email")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> authenticatedUser(@RequestParam(name = "email") String email) {
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(userService.getUserByEmail(email))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
     }
 }

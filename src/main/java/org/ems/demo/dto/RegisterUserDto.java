@@ -11,4 +11,5 @@ public class RegisterUserDto {
     private String firstName;
     private String lastName;
     private String userRoleName;
+    private Company company;
 }

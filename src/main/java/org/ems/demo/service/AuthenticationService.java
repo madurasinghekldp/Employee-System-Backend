@@ -1,7 +1,12 @@
 package org.ems.demo.service;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ems.demo.dto.LoginUserDto;
 import org.ems.demo.dto.RegisterUserDto;
+import org.ems.demo.entity.CompanyEntity;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.entity.UserRoleEntity;
 import org.ems.demo.exception.UserException;
@@ -16,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AuthenticationService {
     private final UserRepository userRepository;
 
@@ -24,20 +30,29 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserRoleRepository userRoleRepository;
 
+    private final ObjectMapper mapper;
+    private final CompanyService companyService;
+
     public AuthenticationService(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
             PasswordEncoder passwordEncoder,
-            UserRoleRepository userRoleRepository) {
+            UserRoleRepository userRoleRepository,
+            ObjectMapper mapper,
+            CompanyService companyService
+    ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.mapper = mapper;
+        this.companyService = companyService;
     }
 
     public UserEntity signup(RegisterUserDto input) {
 
         try{
+            CompanyEntity company = companyService.createCompany(input.getCompany());
             Optional<UserEntity> user = userRepository.findByEmail(input.getEmail());
             if(user.isPresent()){
                 throw new UserException("Email is already used!");
@@ -50,7 +65,9 @@ public class AuthenticationService {
                     .setLastName(input.getLastName())
                     .setEmail(input.getEmail())
                     .setPassword(passwordEncoder.encode(input.getPassword()))
-                    .setUserRoleEntities(List.of(userRoleEntity));
+                    .setUserRoleEntities(List.of(userRoleEntity))
+                    .setCompany(company);
+
 
             return userRepository.save(userEntity);
         }
@@ -63,7 +80,6 @@ public class AuthenticationService {
     }
 
     public UserEntity authenticate(LoginUserDto input) {
-
         try{
             Optional<UserEntity> user = userRepository.findByEmail(input.getEmail());
             if(user.isEmpty()){

@@ -38,15 +38,13 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                             rs.getLong("department_id"),
                             rs.getString("department_name"),
                             rs.getString("department_description"),
-                            null,
                             null
                     );
                     RoleEntity role = new RoleEntity(
                             rs.getLong("role_id"),
                             rs.getString("role_name"),
                             rs.getString("role_description"),
-                            null,
-                            null
+                            null,null
                     );
                     return new EmployeeEntity(
                             rs.getLong("id"),
@@ -54,7 +52,9 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                             rs.getString("last_name"),
                             rs.getString("email"),
                             department,
-                            role
+                            role,
+                            null,null,null,null
+
                     );
                 },
 

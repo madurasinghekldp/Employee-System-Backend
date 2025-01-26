@@ -1,9 +1,8 @@
 package org.ems.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,7 +16,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString//(exclude = {"userRoleEntities", "company"})
 @Accessors(chain = true) // Enable chaining for setter methods
 @Table(name = "users")
 @Entity
@@ -45,7 +46,12 @@ public class UserEntity implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
+    private List<UserRoleEntity> userRoleEntities;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    @JsonBackReference(value = "company-user")
+    private CompanyEntity company;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
