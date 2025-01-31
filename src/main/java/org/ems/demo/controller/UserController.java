@@ -1,6 +1,7 @@
 package org.ems.demo.controller;
 
 
+import org.ems.demo.dto.RegisterUserDto;
 import org.ems.demo.dto.SuccessResponse;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.security.PermissionRequired;
@@ -8,10 +9,7 @@ import org.ems.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,6 +45,15 @@ public class UserController {
     public ResponseEntity<SuccessResponse> authenticatedUser(@RequestParam(name = "email") String email) {
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(userService.getUserByEmail(email))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @PostMapping()
+    @PermissionRequired(values = {"ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> createUser(@RequestBody RegisterUserDto user){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(userService.createUser(user))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

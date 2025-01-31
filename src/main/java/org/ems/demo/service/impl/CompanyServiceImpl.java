@@ -9,6 +9,8 @@ import org.ems.demo.repository.CompanyRepository;
 import org.ems.demo.service.CompanyService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
@@ -22,6 +24,15 @@ public class CompanyServiceImpl implements CompanyService {
         }
         catch(Exception e){
             throw new UserException("Company is not created!");
+        }
+    }
+
+    public Optional<CompanyEntity> getById(Company company){
+        try{
+            return companyRepository.findById(company.getId());
+        }
+        catch(Exception e){
+            throw new UserException("Company is not found!");
         }
     }
 }

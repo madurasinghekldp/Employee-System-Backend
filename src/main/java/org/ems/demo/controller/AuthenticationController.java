@@ -58,16 +58,14 @@ public class AuthenticationController {
         UserEntity authenticatedUserEntity = authenticationService.authenticate(loginUserDto);
         String jwtToken = jwtService.generateToken(authenticatedUserEntity);
 
-        Cookie jwtCookie = new Cookie("token", jwtToken);
-        jwtCookie.setHttpOnly(false); // Prevent access to the cookie via JavaScript
-        jwtCookie.setSecure(true); // Ensure the cookie is sent only over HTTPS
-        jwtCookie.setPath("/"); // Set the cookie's path
-        jwtCookie.setMaxAge((int)jwtService.getExpirationTime()); // Set expiration time in seconds
-
-        // Add the cookie to the response
-        response.addCookie(jwtCookie);
-
-
+//        Cookie jwtCookie = new Cookie("token", jwtToken);
+//        jwtCookie.setHttpOnly(false); // Prevent access to the cookie via JavaScript
+//        jwtCookie.setSecure(true); // Ensure the cookie is sent only over HTTPS
+//        jwtCookie.setPath("/"); // Set the cookie's path
+//        jwtCookie.setMaxAge((int)jwtService.getExpirationTime()); // Set expiration time in seconds
+//
+//        // Add the cookie to the response
+//        response.addCookie(jwtCookie);
 
         LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 
