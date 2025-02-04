@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/emp")
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -24,6 +23,16 @@ public class EmployeeController {
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
                 .data(employeeService.create(employee))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("all")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getAll(@RequestParam(name="companyId") Long companyId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                //.status(successStatus)
+                .data(employeeService.getAll(companyId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

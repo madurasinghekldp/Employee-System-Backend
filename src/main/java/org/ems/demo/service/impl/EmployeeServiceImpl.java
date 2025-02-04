@@ -83,4 +83,22 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeException("Employee is not found!");
         }
     }
+
+    @Override
+    public List<Employee> getAll(Long companyId) {
+        try{
+            List<EmployeeEntity> all = nativeRepository.getAll(companyId);
+            List<Employee> empList = new ArrayList<>();
+            all.forEach(
+                    emp -> {
+                        empList.add(mapper.convertValue(emp, Employee.class));
+                    }
+            );
+            return empList;
+        }
+        catch(Exception e){
+            throw new EmployeeException("No employees found!");
+        }
+
+    }
 }

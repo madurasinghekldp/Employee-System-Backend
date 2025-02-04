@@ -60,4 +60,29 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
 
                 "%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%", limit, offset);
     }
+
+    @Override
+    public List<EmployeeEntity> getAll(Long companyId) {
+        String sql = """
+                select e.id, e.first_name, e.last_name from employee e\s
+                inner join company c on c.id = e.company_id\s
+                where c.id = ?
+                """;
+
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    return new EmployeeEntity(
+                            rs.getLong("id"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            null,
+                            null,
+                            null,
+                            null, null, null, null
+                    );
+                },
+                companyId
+        );
+    }
 }

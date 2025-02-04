@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Entity
+@Accessors(chain = true)
 @Table(name="leaves")
 public class LeaveEntity {
     @Id

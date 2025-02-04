@@ -59,50 +59,87 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.ok().body(errorResponse);
     }
 
-//    @ExceptionHandler(AuthenticationException.class)
-//    ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
-//        log.info(ex.getMessage());
-//    }
-//
-//    @ExceptionHandler(AccessDeniedException.class)
-//    ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex){
-//        log.info(ex.getMessage());
-//    }
-//
-//    @ExceptionHandler(NoSuchElementException.class)
-//    ResponseEntity<ErrorResponse> handleAccessDeniedException(NoSuchElementException ex){
-//        log.info(ex.getMessage());
-//    }
+    @ExceptionHandler(LeaveException.class)
+    ResponseEntity<ErrorResponse> handleUserException(LeaveException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.ok().body(errorResponse);
+    }
+
+
+    @ExceptionHandler(AccountStatusException.class)
+    public ResponseEntity<ErrorResponse> handleAccountStatusException(Exception exception) {
+
+        if (exception instanceof AccountStatusException) {
+            //errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            //errorDetail.setProperty("description", "The account is locked");
+            ErrorResponse errorResponse = ErrorResponse.builder()
+                    .status(failedStatus)
+                    .message("The account is locked")
+                    .build();
+            return ResponseEntity.ok().body(errorResponse);
+        }
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message("Unknown error")
+                .build();
+        return ResponseEntity.status(500).body(errorResponse);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception exception) {
+
+        if (exception instanceof AccessDeniedException) {
+            //errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            //errorDetail.setProperty("description", "You are not authorized to access this resource");
+            ErrorResponse errorResponse = ErrorResponse.builder()
+                    .status(failedStatus)
+                    .message("You are not authorized to access this resource")
+                    .build();
+            return ResponseEntity.ok().body(errorResponse);
+        }
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message("Unknown error")
+                .build();
+        return ResponseEntity.status(500).body(errorResponse);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<ErrorResponse> handleSignatureException(Exception exception) {
+
+        if (exception instanceof SignatureException) {
+            //errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            //errorDetail.setProperty("description", "The JWT signature is invalid");
+            ErrorResponse errorResponse = ErrorResponse.builder()
+                    .status(failedStatus)
+                    .message("The JWT signature is invalid")
+                    .build();
+            return ResponseEntity.ok().body(errorResponse);
+        }
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message("Unknown error")
+                .build();
+        return ResponseEntity.status(500).body(errorResponse);
+    }
 
     @ExceptionHandler(Exception.class)
-    public ProblemDetail handleSecurityException(Exception exception) {
+    public ProblemDetail handleSecurityException(Exception exception){
         ProblemDetail errorDetail = null;
 
-        // TODO send this stack trace to an observability tool
         exception.printStackTrace();
 
         if (exception instanceof BadCredentialsException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
             errorDetail.setProperty("description", "The username or password is incorrect");
 
-            return errorDetail;
         }
-
-        if (exception instanceof AccountStatusException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "The account is locked");
-        }
-
-        if (exception instanceof AccessDeniedException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "You are not authorized to access this resource");
-        }
-
-        if (exception instanceof SignatureException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "The JWT signature is invalid");
-        }
-
         if (exception instanceof ExpiredJwtException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
             errorDetail.setProperty("description", "The JWT token has expired");
