@@ -17,10 +17,10 @@ public class DepartmentNativeRepositoryImpl implements DepartmentNativeRepositor
     private final ModelMapper mapper;
 
     @Override
-    public List<DepartmentEntity> getSelected(String l, String o, String s) {
+    public List<DepartmentEntity> getSelected(Long companyId, String l, String o, String s) {
         String sql = """
                 SELECT d.* FROM department d\s
-                where d.id like ? or d.description like ? or d.name like ?\s
+                where d.company_id = ? and (d.id like ? or d.description like ? or d.name like ?)\s
                 ORDER BY id DESC LIMIT ? OFFSET ?
                 """;
         int limit = Integer.parseInt(l);
@@ -33,7 +33,7 @@ public class DepartmentNativeRepositoryImpl implements DepartmentNativeRepositor
                         rs.getString("description"),
                         null
                 ),
-                "%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
+                companyId,"%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
         );
     }
 }

@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface DepartmentNativeRepository {
 
-    List<DepartmentEntity> getSelected(String l, String o, String s);
+    List<DepartmentEntity> getSelected(Long companyId, String l, String o, String s);
 }

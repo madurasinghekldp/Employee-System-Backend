@@ -40,13 +40,14 @@ public class EmployeeController {
     @GetMapping("/all-selected")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllEmpsSelected(
+            @RequestParam(name="companyId") Long companyId,
             @RequestParam(name="limit") String l,
             @RequestParam(name="offset") String o,
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(employeeService.getAllSelected(l,o,s))
+                .data(employeeService.getAllSelected(companyId,l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

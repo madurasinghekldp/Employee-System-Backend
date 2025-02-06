@@ -30,10 +30,10 @@ public class RoleController {
 
     @GetMapping("/all")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> getAllRoles(){
+    public ResponseEntity<SuccessResponse> getAllRoles(@RequestParam(name="companyId") Long companyId){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(roleService.getAll())
+                .data(roleService.getAll(companyId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -41,13 +41,14 @@ public class RoleController {
     @GetMapping("/all-selected")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllRolesSelected(
+            @RequestParam(name="companyId") Long companyId,
             @RequestParam(name="limit") String l,
             @RequestParam(name="offset") String o,
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(roleService.getAllSelected(l,o,s))
+                .data(roleService.getAllSelected(companyId,l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

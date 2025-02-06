@@ -3,8 +3,10 @@ package org.ems.demo.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Role;
+import org.ems.demo.entity.CompanyEntity;
 import org.ems.demo.entity.RoleEntity;
 import org.ems.demo.exception.RoleException;
+import org.ems.demo.repository.CompanyRepository;
 import org.ems.demo.repository.RoleNativeRepository;
 import org.ems.demo.repository.RoleRepository;
 import org.ems.demo.service.RoleService;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class RoleServiceImpl implements RoleService {
     private final ObjectMapper mapper;
     private final RoleRepository repository;
     private final RoleNativeRepository nativeRepository;
+    private final CompanyRepository companyRepository;
 
     @Override
     public Role createRole(Role role) {
@@ -35,8 +39,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAllSelected(String l, String o, String s) {
-        List<RoleEntity> selected = nativeRepository.getAllSelected(l,o,s);
+    public List<Role> getAllSelected(Long companyId, String l, String o, String s) {
+        List<RoleEntity> selected = nativeRepository.getAllSelected(companyId,l,o,s);
         if(selected.isEmpty()) throw new RoleException("Roles are not found");
         List<Role> roleList = new ArrayList<>();
         selected.forEach(role->{
@@ -74,8 +78,10 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAll() {
-        Iterable<RoleEntity> all = repository.findAll();
+    public List<Role> getAll(Long companyId) {
+        Optional<CompanyEntity> company = companyRepository.findById(companyId);
+        if(company.isEmpty()) throw new RoleException("Company is not found!");
+        Iterable<RoleEntity> all = repository.findAllByCompany(company.get());
         if(((Collection<?>) all).isEmpty()) throw new RoleException("Roles are not found");
         List<Role> roleList = new ArrayList<>();
         all.forEach(

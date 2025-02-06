@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Department;
 import org.ems.demo.dto.Employee;
 import org.ems.demo.dto.Role;
+import org.ems.demo.entity.CompanyEntity;
 import org.ems.demo.entity.DepartmentEntity;
 import org.ems.demo.entity.EmployeeEntity;
 import org.ems.demo.entity.RoleEntity;
 import org.ems.demo.exception.EmployeeException;
+import org.ems.demo.repository.CompanyRepository;
 import org.ems.demo.repository.EmployeeNativeRepository;
 import org.ems.demo.repository.EmployeeRepository;
 import org.ems.demo.service.EmployeeService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +26,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository repository;
     private final EmployeeNativeRepository nativeRepository;
+    private final CompanyRepository companyRepository;
     private final ObjectMapper mapper;
 
     @Override
     public Employee create(Employee employee) {
 
         try{
-            EmployeeEntity saved = repository.save(mapper.convertValue(employee,EmployeeEntity.class));
+            Optional<CompanyEntity> companyOp = companyRepository.findById(employee.getCompany().getId());
+            if(companyOp.isEmpty()) throw new EmployeeException("Company is not found!");
+            CompanyEntity company = companyOp.get();
+            EmployeeEntity emp = mapper.convertValue(employee,EmployeeEntity.class);
+            emp.setCompany(company);
+            EmployeeEntity saved = repository.save(emp);
             return mapper.convertValue(saved,Employee.class);
         }
         catch(Exception e){
@@ -38,8 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllSelected(String l, String o, String s) {
-        List<EmployeeEntity> selected = nativeRepository.getSelected(l,o,s);
+    public List<Employee> getAllSelected(Long companyId,String l, String o, String s) {
+        List<EmployeeEntity> selected = nativeRepository.getSelected(companyId,l,o,s);
         if(selected.isEmpty()) throw new EmployeeException("Employees are not found!");
         List<Employee> empList = new ArrayList<>();
         selected.forEach(emp->{

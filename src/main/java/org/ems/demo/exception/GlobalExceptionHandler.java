@@ -60,7 +60,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(LeaveException.class)
-    ResponseEntity<ErrorResponse> handleUserException(LeaveException ex){
+    ResponseEntity<ErrorResponse> handleLeaveException(LeaveException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.ok().body(errorResponse);
+    }
+
+    @ExceptionHandler(SalaryException.class)
+    ResponseEntity<ErrorResponse> handleSalaryException(SalaryException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.ok().body(errorResponse);
+    }
+
+    @ExceptionHandler(TaskException.class)
+    ResponseEntity<ErrorResponse> handleTaskException(TaskException ex){
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(failedStatus)
                 .message(ex.getMessage())

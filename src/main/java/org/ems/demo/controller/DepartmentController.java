@@ -31,10 +31,10 @@ public class DepartmentController {
 
     @GetMapping("/all")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> getAllDep(){
+    public ResponseEntity<SuccessResponse> getAllDep(@RequestParam(name="companyId") Long companyId){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(departmentService.getAll())
+                .data(departmentService.getAll(companyId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -42,13 +42,14 @@ public class DepartmentController {
     @GetMapping("/all-selected")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> getAllDepsSelected(
+            @RequestParam(name="companyId") Long companyId,
             @RequestParam(name="limit") String l,
             @RequestParam(name="offset") String o,
             @RequestParam(name="search") String s
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(departmentService.getAllSelected(l,o,s))
+                .data(departmentService.getAllSelected(companyId,l,o,s))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

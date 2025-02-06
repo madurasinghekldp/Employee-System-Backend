@@ -17,10 +17,10 @@ public class RoleNativeRepositoryImpl implements RoleNativeRepository {
     private final ModelMapper mapper;
 
     @Override
-    public List<RoleEntity> getAllSelected(String l, String o, String s) {
+    public List<RoleEntity> getAllSelected(Long companyId, String l, String o, String s) {
         String sql = """
-                SELECT * FROM role \s
-                where id like ? or description like ? or name like ?\s
+                SELECT * FROM role\s
+                where company_id = ? and (id like ? or description like ? or name like ?)\s
                 ORDER BY id DESC LIMIT ? OFFSET ?
                 """;
         int limit = Integer.parseInt(l);
@@ -33,7 +33,7 @@ public class RoleNativeRepositoryImpl implements RoleNativeRepository {
                         rs.getString("description"),
                         null,null
                 ),
-                "%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
+                companyId,"%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
         );
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface EmployeeService {
     Object create(Employee employee);
 
-    Object getAllSelected(String l, String o, String s);
+    Object getAllSelected(Long companyId, String l, String o, String s);
 
     void updateEmp(Employee employee);
 

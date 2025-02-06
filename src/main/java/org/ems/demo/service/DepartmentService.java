@@ -7,9 +7,9 @@ import java.util.List;
 public interface DepartmentService {
     Department createDep(Department department);
 
-    List<Department> getAll();
+    List<Department> getAll(Long companyId);
 
-    List<Department> getAllSelected(String l, String o, String s);
+    List<Department> getAllSelected(Long companyId, String l, String o, String s);
 
     void updateDep(Department department);
 
