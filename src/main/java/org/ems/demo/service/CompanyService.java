@@ -9,4 +9,6 @@ public interface CompanyService {
 
     CompanyEntity createCompany(Company company);
     Optional<CompanyEntity> getById(Company company);
+
+    Company updateCompany(Company company);
 }

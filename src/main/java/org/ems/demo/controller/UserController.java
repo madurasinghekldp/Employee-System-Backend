@@ -57,4 +57,16 @@ public class UserController {
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
+
+    @PatchMapping
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> updateUser(
+            @RequestParam(name="id") Integer id,
+            @RequestBody RegisterUserDto user
+    ){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(userService.updateUser(id,user))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
 }

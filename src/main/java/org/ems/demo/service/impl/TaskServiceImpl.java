@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
             taskEntity.setStartDate(task.getStartDate());
             taskEntity.setDueDate(task.getDueDate());
             taskEntity.setCompletedDate(task.getCompletedDate());
-            if(!task.getCompletedDate().toString().isEmpty()){
+            if(task.getCompletedDate()!=null){
                 taskEntity.setOverDues(calculateOverDues(task.getCompletedDate(),task.getDueDate()));
             }
             return mapper.convertValue(taskRepository.save(taskEntity),Task.class);

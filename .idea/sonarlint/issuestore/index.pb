@@ -276,3 +276,7 @@ x
 Hsrc/main/java/org/ems/demo/repository/impl/TaskNativeRepositoryImpl.java,6\2\621edcf064a33f80a54661e5eae47954393159c7
 g
 7src/main/java/org/ems/demo/exception/TaskException.java,7\5\757e2dd75c628448c893a0e4d61a1ba9295ce880
+l
+<src/main/java/org/ems/demo/controller/CompanyController.java,4\3\430dbf98ea2e9a32559773f18c850527116a2dab
+j
+:src/main/java/org/ems/demo/exception/CompanyException.java,6\1\6122e5fa1ff5ca27d9a92e2199e74aedf3dacef6

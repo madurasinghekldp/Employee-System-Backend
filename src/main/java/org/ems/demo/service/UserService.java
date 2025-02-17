@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -64,7 +66,6 @@ public class UserService {
     }
 
     public Object createUser(RegisterUserDto user) {
-        log.info(user.toString());
         try{
             CompanyEntity company = companyService.getById(user.getCompany()).get();
             UserRoleEntity userRole = userRoleRepository.findByName(user.getUserRoleName()).get();
@@ -79,6 +80,24 @@ public class UserService {
         }
         catch(Exception e){
             throw new UserException("User is not created!");
+        }
+    }
+
+    public User updateUser(Integer id,RegisterUserDto user) {
+        try{
+            Optional<UserEntity> byId = userRepository.findById(id);
+            if(byId.isEmpty()) throw new UserException("User not found!");
+            UserEntity userEntity = byId.get();
+            userEntity.setFirstName(user.getFirstName());
+            userEntity.setLastName(user.getLastName());
+            userEntity.setEmail(user.getEmail());
+            if(!Objects.equals(user.getPassword(), "")){
+                userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            return mapper.convertValue(userRepository.save(userEntity), User.class);
+        }
+        catch(Exception e){
+            throw new UserException("User is not updated!");
         }
     }
 }
