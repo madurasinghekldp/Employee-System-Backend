@@ -3,6 +3,7 @@ package org.ems.demo.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ems.demo.dto.LoginResponse;
@@ -40,7 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SuccessResponse> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<SuccessResponse> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
         UserEntity registeredUserEntity = authenticationService.signup(registerUserDto);
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
@@ -57,15 +58,6 @@ public class AuthenticationController {
 
         UserEntity authenticatedUserEntity = authenticationService.authenticate(loginUserDto);
         String jwtToken = jwtService.generateToken(authenticatedUserEntity);
-
-//        Cookie jwtCookie = new Cookie("token", jwtToken);
-//        jwtCookie.setHttpOnly(false); // Prevent access to the cookie via JavaScript
-//        jwtCookie.setSecure(true); // Ensure the cookie is sent only over HTTPS
-//        jwtCookie.setPath("/"); // Set the cookie's path
-//        jwtCookie.setMaxAge((int)jwtService.getExpirationTime()); // Set expiration time in seconds
-//
-//        // Add the cookie to the response
-//        response.addCookie(jwtCookie);
 
         LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
 

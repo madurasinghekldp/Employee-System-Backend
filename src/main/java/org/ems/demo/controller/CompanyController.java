@@ -1,5 +1,6 @@
 package org.ems.demo.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.ems.demo.dto.Company;
 import org.ems.demo.dto.RegisterUserDto;
@@ -19,7 +20,7 @@ public class CompanyController {
     @PutMapping
     @PermissionRequired(values = {"ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateCompany(
-            @RequestBody Company company
+            @Valid @RequestBody Company company
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(companyService.updateCompany(company))

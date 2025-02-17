@@ -280,3 +280,5 @@ l
 <src/main/java/org/ems/demo/controller/CompanyController.java,4\3\430dbf98ea2e9a32559773f18c850527116a2dab
 j
 :src/main/java/org/ems/demo/exception/CompanyException.java,6\1\6122e5fa1ff5ca27d9a92e2199e74aedf3dacef6
+^
+.src/main/java/org/ems/demo/dto/UpdateUser.java,4\0\40fa5a40abae569ec125e97871a13751f1425076

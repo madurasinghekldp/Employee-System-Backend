@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.ems.demo.dto.Company;
 import org.ems.demo.dto.RegisterUserDto;
+import org.ems.demo.dto.UpdateUser;
 import org.ems.demo.dto.User;
 import org.ems.demo.entity.CompanyEntity;
 import org.ems.demo.entity.UserEntity;
@@ -83,7 +84,7 @@ public class UserService {
         }
     }
 
-    public User updateUser(Integer id,RegisterUserDto user) {
+    public User updateUser(Integer id, UpdateUser user) {
         try{
             Optional<UserEntity> byId = userRepository.findById(id);
             if(byId.isEmpty()) throw new UserException("User not found!");

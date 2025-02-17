@@ -3,21 +3,16 @@ package org.ems.demo.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class User {
-    private Long id;
-    private String firstName;
-    private String lastName;
+public class UpdateUser {
     @Email(message = "Please enter a valid email Id")
     @NotEmpty(message = "Must not be Empty and NULL")
     private String email;
-    private Company company;
+    @Size(min=8,message = "Password should contain at least 8 characters.")
+    private String password;
+    private String firstName;
+    private String lastName;
 }

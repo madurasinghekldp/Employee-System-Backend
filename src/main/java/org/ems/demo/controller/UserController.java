@@ -1,8 +1,10 @@
 package org.ems.demo.controller;
 
 
+import jakarta.validation.Valid;
 import org.ems.demo.dto.RegisterUserDto;
 import org.ems.demo.dto.SuccessResponse;
+import org.ems.demo.dto.UpdateUser;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.UserService;
@@ -51,7 +53,7 @@ public class UserController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createUser(@RequestBody RegisterUserDto user){
+    public ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody RegisterUserDto user){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(userService.createUser(user))
                 .build();
@@ -62,7 +64,7 @@ public class UserController {
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateUser(
             @RequestParam(name="id") Integer id,
-            @RequestBody RegisterUserDto user
+            @Valid @RequestBody UpdateUser user
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(userService.updateUser(id,user))
