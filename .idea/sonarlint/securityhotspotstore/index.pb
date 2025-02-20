@@ -282,3 +282,11 @@ j
 :src/main/java/org/ems/demo/exception/CompanyException.java,6\1\6122e5fa1ff5ca27d9a92e2199e74aedf3dacef6
 ^
 .src/main/java/org/ems/demo/dto/UpdateUser.java,4\0\40fa5a40abae569ec125e97871a13751f1425076
+m
+=src/main/java/org/ems/demo/service/impl/EmailServiceImpl.java,b\a\baa3998773bbc6fe5ac9a928d93f3d2962cd718e
+d
+4src/main/java/org/ems/demo/service/EmailService.java,a\d\adc64ef0ef1d569bfd85b363abb5f58263c30b20
+b
+2src/main/java/org/ems/demo/dto/UpdatePassword.java,1\0\10a52b0b7066d71173e20798c26b7cdf37f9edc7
+b
+2src/main/java/org/ems/demo/config/AsyncConfig.java,4\e\4eea812d13fbb73db61661629b00e14edd4e104d

@@ -51,6 +51,9 @@ public class CompanyServiceImpl implements CompanyService {
             CompanyEntity saved = companyRepository.save(companyEntity);
             return mapper.convertValue(saved,Company.class);
         }
+        catch(CompanyException e){
+            throw e;
+        }
         catch(Exception e){
             throw new CompanyException("Company is not updated");
         }

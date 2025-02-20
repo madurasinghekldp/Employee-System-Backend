@@ -1,5 +1,6 @@
 package org.ems.demo.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Role;
 import org.ems.demo.dto.SuccessResponse;
@@ -20,7 +21,7 @@ public class RoleController {
 
     @PostMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createRole(@RequestBody Role role){
+    public ResponseEntity<SuccessResponse> createRole(@Valid @RequestBody Role role){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
                 .data(roleService.createRole(role))
@@ -56,7 +57,7 @@ public class RoleController {
     @PutMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<SuccessResponse> updateRole(@RequestBody Role role){
+    public ResponseEntity<SuccessResponse> updateRole(@Valid @RequestBody Role role){
         roleService.updateRole(role);
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)

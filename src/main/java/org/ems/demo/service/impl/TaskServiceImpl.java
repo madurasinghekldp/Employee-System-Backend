@@ -10,6 +10,7 @@ import org.ems.demo.exception.TaskException;
 import org.ems.demo.repository.EmployeeRepository;
 import org.ems.demo.repository.TaskNativeRepository;
 import org.ems.demo.repository.TaskRepository;
+import org.ems.demo.service.EmailService;
 import org.ems.demo.service.TaskService;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskNativeRepository taskNativeRepository;
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
+    private final EmailService emailService;
     private final ObjectMapper mapper;
 
     @Override
@@ -40,7 +42,25 @@ public class TaskServiceImpl implements TaskService {
             if(employee.isEmpty()) throw new TaskException("Employee is not found!");
             TaskEntity taskEntity = mapper.convertValue(task, TaskEntity.class);
             taskEntity.setEmployee(employee.get());
-            return mapper.convertValue(taskRepository.save(taskEntity), Task.class);
+            TaskEntity saved = taskRepository.save(taskEntity);
+            emailService.sendSimpleMessage(employee.get().getEmail(),
+                    "You have a task.",
+                    String.format("""
+                            You have a task to complete.
+                            Please complete it within given dates.
+                            
+                            Task: %s
+                            Start date: %s
+                            Due date: %s
+                            
+                            Thank you,
+                            %s.
+                            """,task.getTaskName(),task.getStartDate(),task.getDueDate(),employee.get().getCompany().getName())
+                    );
+            return mapper.convertValue(saved, Task.class);
+        }
+        catch(TaskException e){
+            throw e;
         }
         catch(Exception e){
             throw new TaskException("Task is not created");
@@ -58,8 +78,10 @@ public class TaskServiceImpl implements TaskService {
             });
             return tasks;
         }
+        catch(TaskException e){
+            throw e;
+        }
         catch(Exception e){
-            log.info(e.toString());
             throw new TaskException("Unknown error occurred!");
         }
     }
@@ -80,6 +102,9 @@ public class TaskServiceImpl implements TaskService {
             return mapper.convertValue(taskRepository.save(taskEntity),Task.class);
 
         }
+        catch(TaskException e){
+            throw e;
+        }
         catch(Exception e){
             throw new TaskException("Task is not updated!");
         }
@@ -91,6 +116,9 @@ public class TaskServiceImpl implements TaskService {
             Optional<TaskEntity> byId = taskRepository.findById(id);
             if(byId.isEmpty()) throw new TaskException("Task is not found!");
             taskRepository.deleteById(id);
+        }
+        catch(TaskException e){
+            throw e;
         }
         catch(Exception e){
             throw new TaskException("Task is not deleted!");

@@ -3,10 +3,7 @@ package org.ems.demo.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.ems.demo.dto.Company;
-import org.ems.demo.dto.RegisterUserDto;
-import org.ems.demo.dto.UpdateUser;
-import org.ems.demo.dto.User;
+import org.ems.demo.dto.*;
 import org.ems.demo.entity.CompanyEntity;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.entity.UserRoleEntity;
@@ -28,6 +25,8 @@ public class UserService {
     private final UserRoleRepository userRoleRepository;
     private final CompanyService companyService;
     private final PasswordEncoder passwordEncoder;
+
+    private final EmailService emailService;
     private final ObjectMapper mapper;
 
     public UserService(
@@ -36,7 +35,8 @@ public class UserService {
             UserNativeRepository userNativeRepository,
             CompanyService companyService,
             UserRoleRepository userRoleRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            EmailService emailService
     ) {
         this.userRepository = userRepository;
         this.mapper = mapper;
@@ -44,6 +44,7 @@ public class UserService {
         this.companyService = companyService;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     public List<UserEntity> allUsers() {
@@ -66,7 +67,7 @@ public class UserService {
         return mappeduser;
     }
 
-    public Object createUser(RegisterUserDto user) {
+    public User createUser(RegisterUserDto user) {
         try{
             CompanyEntity company = companyService.getById(user.getCompany()).get();
             UserRoleEntity userRole = userRoleRepository.findByName(user.getUserRoleName()).get();
@@ -77,7 +78,18 @@ public class UserService {
                     .setPassword(passwordEncoder.encode(user.getPassword()))
                     .setUserRoleEntities(List.of(userRole))
                     .setCompany(company);
-            return userRepository.save(newUser);
+            UserEntity saved = userRepository.save(newUser);
+            emailService.sendSimpleMessage(newUser.getEmail(),
+                    "Welcome to EMPGO employee management system.",
+                    """
+                            You can login to system using your email\s
+                            and password as
+                            """+user.getPassword()+ """
+                            
+                            Thank you,
+                            empgo team.
+                            """);
+            return mapper.convertValue(saved, User.class);
         }
         catch(Exception e){
             throw new UserException("User is not created!");
@@ -92,13 +104,62 @@ public class UserService {
             userEntity.setFirstName(user.getFirstName());
             userEntity.setLastName(user.getLastName());
             userEntity.setEmail(user.getEmail());
-            if(!Objects.equals(user.getPassword(), "")){
-                userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
-            return mapper.convertValue(userRepository.save(userEntity), User.class);
+            UserEntity saved = userRepository.save(userEntity);
+            emailService.sendSimpleMessage(userEntity.getEmail(),
+                    "Your profile details has been updated.",
+                    """
+                            Your profile details has been updated.
+                            Please login back with your new Credentials.
+                            
+                            Thank you,
+                            empgo team.
+                            """
+                    );
+            return mapper.convertValue(saved, User.class);
+        }
+        catch(UserException e){
+            throw e;
         }
         catch(Exception e){
             throw new UserException("User is not updated!");
+        }
+    }
+
+    public void deleteUser(Integer id) {
+        Optional<UserEntity> byId = userRepository.findById(id);
+        if(byId.isEmpty()) throw new UserException("User not found!");
+        UserEntity existingUser = byId.get();
+        existingUser.setActive(false);
+        userRepository.save(existingUser);
+    }
+
+    public Object updatePassword(Integer id, UpdatePassword updatePassword) {
+        try{
+            Optional<UserEntity> byId = userRepository.findById(id);
+            if(byId.isEmpty()) throw new UserException("User not found!");
+            UserEntity existingUser = byId.get();
+            if(!passwordEncoder.matches(updatePassword.getOldPassword(), existingUser.getPassword())){
+                throw new UserException("Incorrect old password!");
+            }
+            existingUser.setPassword(passwordEncoder.encode(updatePassword.getNewPassword()));
+            UserEntity saved = userRepository.save(existingUser);
+            emailService.sendSimpleMessage(existingUser.getEmail(),
+                    "Your password has been updated.",
+                    """
+                            Your password has been updated.
+                            Contact us if this happened without knowingly.
+                            
+                            Thank you,
+                            empgo team.
+                            """
+            );
+            return mapper.convertValue(saved, User.class);
+        }
+        catch(UserException e){
+            throw e;
+        }
+        catch(Exception e){
+            throw new UserException("Password is not updated!");
         }
     }
 }

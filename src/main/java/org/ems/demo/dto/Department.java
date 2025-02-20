@@ -1,5 +1,6 @@
 package org.ems.demo.dto;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,9 @@ import java.util.List;
 @ToString
 public class Department {
     private Long id;
+    @Size(min=3,message = "Name must have at least 3 characters.")
     private String name;
+    @Size(min=10,message = "Description must have at least 10 characters.")
     private String description;
     private Company company;
 }

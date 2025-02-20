@@ -1,5 +1,6 @@
 package org.ems.demo.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.SuccessResponse;
 import org.ems.demo.dto.Task;
@@ -17,7 +18,7 @@ public class TaskController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createTask(@RequestBody Task task){
+    public ResponseEntity<SuccessResponse> createTask(@Valid @RequestBody Task task){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(taskService.createTask(task))
                 .build();
@@ -40,7 +41,7 @@ public class TaskController {
     @PutMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateTask(
-            @RequestBody Task task
+            @Valid @RequestBody Task task
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(taskService.updateTask(task))

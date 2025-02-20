@@ -41,6 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             EmployeeEntity saved = repository.save(emp);
             return mapper.convertValue(saved,Employee.class);
         }
+        catch(EmployeeException e){
+            throw e;
+        }
         catch(Exception e){
             throw new EmployeeException("Employee is not added!");
         }

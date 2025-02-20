@@ -37,6 +37,9 @@ public class SalaryServiceImpl implements SalaryService {
             SalaryEntity saved = salaryRepository.save(salaryEntity);
             return mapper.convertValue(saved, Salary.class);
         }
+        catch(SalaryException e){
+            throw e;
+        }
         catch(Exception e){
             throw new SalaryException("Salary is not created!");
         }
@@ -55,8 +58,10 @@ public class SalaryServiceImpl implements SalaryService {
             );
             return salaryList;
         }
+        catch(SalaryException e){
+            throw e;
+        }
         catch(Exception e){
-            log.info(e.toString());
             throw new SalaryException("Unknown error occurred");
         }
     }
@@ -71,6 +76,9 @@ public class SalaryServiceImpl implements SalaryService {
             salaryEntity.setPaymentDate(salary.getPaymentDate());
             return mapper.convertValue(salaryRepository.save(salaryEntity),Salary.class);
         }
+        catch(SalaryException e){
+            throw e;
+        }
         catch(Exception e){
             throw new SalaryException("Salary is not Updated!");
         }
@@ -82,6 +90,9 @@ public class SalaryServiceImpl implements SalaryService {
             Optional<SalaryEntity> byId = salaryRepository.findById(id);
             if(byId.isEmpty()) throw new SalaryException("Salary is not found!");
             salaryRepository.deleteById(id);
+        }
+        catch(SalaryException e){
+            throw e;
         }
         catch(Exception e){
             throw new SalaryException("Salary is not deleted!");

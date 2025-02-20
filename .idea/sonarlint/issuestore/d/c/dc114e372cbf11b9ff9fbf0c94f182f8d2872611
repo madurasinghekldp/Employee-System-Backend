@@ -1,5 +1,5 @@
 
 ’
-java:S3655E"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜ì„8ª¨ØÍ2J$34bfc049-1a44-44eb-8571-fcce01678dfe
+java:S3655H"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜ì„8ª¨ØÍ2J$edb58b7b-b67d-4209-abed-6b649fd9d90f
 t
-java:S1602f",Remove useless curly braces around statement(Ïò¤Äúÿÿÿÿ8¶¨ØÍ2J$344a90f4-c493-4125-9f7e-431732d7738b
+java:S1602i",Remove useless curly braces around statement(Ïò¤Äúÿÿÿÿ8¶¨ØÍ2J$0061dc94-0de7-4876-87b8-cb9cd4f0b241

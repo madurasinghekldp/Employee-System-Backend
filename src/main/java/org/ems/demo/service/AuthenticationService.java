@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class AuthenticationService {
         this.companyService = companyService;
     }
 
+    @Transactional
     public UserEntity signup(RegisterUserDto input) {
 
         try{
@@ -85,6 +87,7 @@ public class AuthenticationService {
             if(user.isEmpty()){
                 throw new UserException("You don't have an account!");
             }
+            if(!user.get().isActive()) throw new UserException("Your account is deactivated!");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             input.getEmail(),

@@ -1,5 +1,6 @@
 package org.ems.demo.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Leave;
 import org.ems.demo.dto.SuccessResponse;
@@ -17,7 +18,7 @@ public class LeaveController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createLeave(@RequestBody Leave leave){
+    public ResponseEntity<SuccessResponse> createLeave(@Valid @RequestBody Leave leave){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.createLeave(leave))
                 .build();
@@ -40,7 +41,7 @@ public class LeaveController {
     @PutMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateLeaves(
-            @RequestBody Leave leave
+            @Valid @RequestBody Leave leave
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.updateLeave(leave))

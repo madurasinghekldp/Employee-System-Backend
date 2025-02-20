@@ -1,6 +1,7 @@
 package org.ems.demo.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Department;
 import org.ems.demo.dto.SuccessResponse;
@@ -21,7 +22,7 @@ public class DepartmentController {
 
     @PostMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createDep(@RequestBody Department department){
+    public ResponseEntity<SuccessResponse> createDep(@Valid @RequestBody Department department){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
                 .data(departmentService.createDep(department))
@@ -57,7 +58,7 @@ public class DepartmentController {
     @PutMapping
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<SuccessResponse> updateDep(@RequestBody Department department){
+    public ResponseEntity<SuccessResponse> updateDep(@Valid @RequestBody Department department){
         departmentService.updateDep(department);
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)

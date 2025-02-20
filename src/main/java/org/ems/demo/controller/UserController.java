@@ -4,6 +4,7 @@ package org.ems.demo.controller;
 import jakarta.validation.Valid;
 import org.ems.demo.dto.RegisterUserDto;
 import org.ems.demo.dto.SuccessResponse;
+import org.ems.demo.dto.UpdatePassword;
 import org.ems.demo.dto.UpdateUser;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.security.PermissionRequired;
@@ -23,16 +24,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-//    @GetMapping("/by-email")
-//    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-//    public ResponseEntity<UserEntity> authenticatedUser(@RequestParam(name = "email") String email) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        UserEntity currentUserEntity = (UserEntity) authentication.getPrincipal();
-//
-//        return ResponseEntity.ok(currentUserEntity);
-//    }
 
     @GetMapping()
     @PermissionRequired(values = {"ROLE_ADMIN"})
@@ -60,7 +51,7 @@ public class UserController {
         return ResponseEntity.ok().body(successResponse);
     }
 
-    @PatchMapping
+    @PatchMapping("/profile")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateUser(
             @RequestParam(name="id") Integer id,
@@ -68,6 +59,30 @@ public class UserController {
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(userService.updateUser(id,user))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @PatchMapping("/password")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> updatePassword(
+            @RequestParam(name="id") Integer id,
+            @Valid @RequestBody UpdatePassword updatePassword
+            ){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(userService.updatePassword(id,updatePassword))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @DeleteMapping
+    @PermissionRequired(values={"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> deleteUser(
+            @RequestParam(name="id") Integer id
+    ){
+        userService.deleteUser(id);
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(null)
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

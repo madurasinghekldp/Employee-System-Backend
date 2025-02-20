@@ -38,6 +38,9 @@ public class LeaveServiceImpl implements LeaveService {
             leaveEntity.setEmployee(employeeEntity.get());
             return mapper.convertValue(leaveRepository.save(leaveEntity), Leave.class);
         }
+        catch(LeaveException e){
+            throw e;
+        }
         catch(Exception e){
             throw new LeaveException("Leave is not added!");
         }
@@ -56,8 +59,10 @@ public class LeaveServiceImpl implements LeaveService {
             );
             return leaveList;
         }
+        catch(LeaveException e){
+            throw e;
+        }
         catch(Exception e){
-            log.info(e.toString());
             throw new LeaveException("Unknown error occurred");
         }
     }
@@ -73,6 +78,9 @@ public class LeaveServiceImpl implements LeaveService {
             LeaveEntity saved = leaveRepository.save(leaveEntity);
             return mapper.convertValue(saved, Leave.class);
         }
+        catch(LeaveException e){
+            throw e;
+        }
         catch(Exception e){
             throw new LeaveException("Leave is not updated!");
         }
@@ -84,6 +92,9 @@ public class LeaveServiceImpl implements LeaveService {
             Optional<LeaveEntity> byId = leaveRepository.findById(id);
             if(byId.isEmpty()) throw new LeaveException("Leave is not found");
             leaveRepository.deleteById(id);
+        }
+        catch(LeaveException e){
+            throw e;
         }
         catch(Exception e){
             throw new LeaveException("Leave is not deleted!");

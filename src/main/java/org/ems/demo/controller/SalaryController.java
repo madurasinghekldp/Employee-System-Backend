@@ -1,5 +1,6 @@
 package org.ems.demo.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Salary;
 import org.ems.demo.dto.SuccessResponse;
@@ -17,7 +18,7 @@ public class SalaryController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createSalary(@RequestBody Salary salary){
+    public ResponseEntity<SuccessResponse> createSalary(@Valid @RequestBody Salary salary){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(salaryService.createSalary(salary))
                 .build();
@@ -40,7 +41,7 @@ public class SalaryController {
     @PutMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> updateSalary(
-            @RequestBody Salary salary
+            @Valid @RequestBody Salary salary
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(salaryService.updateSalary(salary))

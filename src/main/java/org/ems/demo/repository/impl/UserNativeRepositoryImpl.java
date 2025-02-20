@@ -40,7 +40,8 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
                             null,
                             company,
                             null,
-                            null
+                            null,
+                            true
                     );
                 },
                 email

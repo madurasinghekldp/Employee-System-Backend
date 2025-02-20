@@ -12,8 +12,11 @@ public class RegisterUserDto {
     private String email;
     @Size(min=8,message = "Password should contain at least 8 characters.")
     private String password;
+    @Size(min=3,message = "First name must have at least 3 characters.")
     private String firstName;
+    @Size(min=3,message = "Last name must have at least 3 characters.")
     private String lastName;
+    @NotEmpty(message = "User role must be selected.")
     private String userRoleName;
     private Company company;
 }
