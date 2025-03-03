@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/by-email")
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> authenticatedUser(@RequestParam(name = "email") String email) {
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(userService.getUserByEmail(email))
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PatchMapping("/profile")
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> updateUser(
             @RequestParam(name="id") Integer id,
             @Valid @RequestBody UpdateUser user
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> updatePassword(
             @RequestParam(name="id") Integer id,
             @Valid @RequestBody UpdatePassword updatePassword
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    @PermissionRequired(values={"ROLE_USER","ROLE_ADMIN"})
+    @PermissionRequired(values={"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> deleteUser(
             @RequestParam(name="id") Integer id
     ){

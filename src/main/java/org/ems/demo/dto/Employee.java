@@ -21,9 +21,11 @@ public class Employee {
     private String lastName;
     @Email(message = "Enter a valid email address.")
     private String email;
-    @NotNull(message = "Department field should not null.")
+    @NotNull(message = "User should not be null.")
+    private User user;
+    @NotNull(message = "Department field should not be null.")
     private Department department;
-    @NotNull(message = "Role field should not null.")
+    @NotNull(message = "Role field should not be null.")
     private Role role;
     private Company company;
 }

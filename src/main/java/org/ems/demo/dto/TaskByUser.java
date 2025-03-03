@@ -1,6 +1,5 @@
 package org.ems.demo.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class TaskByUser {
     private Long id;
     @Size(min=10, message = "Task name must have at least 10 characters")
     private String taskName;
@@ -24,9 +23,9 @@ public class Task {
     private Date completedDate;
 
     private int overDues;
-    @NotNull(message = "Employee must be selected.")
-    private Employee employee;
 
+    private Employee employee;
+    @NotNull(message = "Status should be provided")
     private String status;
     private User approvedBy;
 }

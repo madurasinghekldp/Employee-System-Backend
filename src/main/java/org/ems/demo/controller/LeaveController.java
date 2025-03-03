@@ -3,6 +3,7 @@ package org.ems.demo.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.Leave;
+import org.ems.demo.dto.LeaveByUser;
 import org.ems.demo.dto.SuccessResponse;
 import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.LeaveService;
@@ -17,8 +18,8 @@ public class LeaveController {
     private final LeaveService leaveService;
 
     @PostMapping()
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createLeave(@Valid @RequestBody Leave leave){
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> createLeave(@Valid @RequestBody LeaveByUser leave){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.createLeave(leave))
                 .build();
@@ -34,6 +35,19 @@ public class LeaveController {
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.getAllLeaves(employeeId,limit,offset))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/all-by-user")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getAllLeavesByUser(
+            @RequestParam(name="userId") Integer userId,
+            @RequestParam(name="limit") int limit,
+            @RequestParam(name="offset") int offset
+    ){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(leaveService.getAllLeavesByUser(userId,limit,offset))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

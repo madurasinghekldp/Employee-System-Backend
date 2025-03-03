@@ -22,6 +22,12 @@ public class Config {
     @Value("${spring.mail.password}")
     private String password;
 
+    @Value("${spring.mail.host}")
+    private String host;
+
+    @Value("${spring.mail.port}")
+    private int port;
+
     @Bean
     public ModelMapper getMapper(){
         return new ModelMapper();
@@ -30,8 +36,8 @@ public class Config {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(host);
+        mailSender.setPort(port);
 
         mailSender.setUsername(username);
         mailSender.setPassword(password);

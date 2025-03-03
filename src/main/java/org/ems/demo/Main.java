@@ -6,10 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "org.ems.demo.repository")
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class);
@@ -27,6 +29,12 @@ public class Main {
             // Check and add ROLE_ADMIN
             if (userRoleRepository.findByName("ROLE_ADMIN").isEmpty()) {
                 UserRoleEntity adminUserRoleEntity = new UserRoleEntity().setName("ROLE_ADMIN");
+                userRoleRepository.save(adminUserRoleEntity);
+            }
+
+            // Check and add ROLE_EMP
+            if (userRoleRepository.findByName("ROLE_EMP").isEmpty()) {
+                UserRoleEntity adminUserRoleEntity = new UserRoleEntity().setName("ROLE_EMP");
                 userRoleRepository.save(adminUserRoleEntity);
             }
         };

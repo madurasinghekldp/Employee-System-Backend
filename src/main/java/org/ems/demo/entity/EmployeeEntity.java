@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +15,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Accessors(chain = true)
 @Table(name="employee")
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
+
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="user_id")
+    private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id", nullable = true)
     @JsonBackReference(value = "department-employee")
     private DepartmentEntity department;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
+    @ManyToOne()
+    @JoinColumn(name = "role_id",nullable = true)
     @JsonBackReference(value = "role-employee")
     private RoleEntity role;
 

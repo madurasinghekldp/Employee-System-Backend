@@ -24,9 +24,9 @@ public class DepartmentEntity {
     private String name;
     private String description;
 
-//    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference(value = "department-employee")
-//    private List<EmployeeEntity> employees;
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval = false)
+    @JsonManagedReference(value = "department-employee")
+    private List<EmployeeEntity> employees;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

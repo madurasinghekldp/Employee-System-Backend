@@ -41,6 +41,8 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
                             company,
                             null,
                             null,
+                            null,
+                            null,
                             true
                     );
                 },

@@ -1,5 +1,7 @@
 
 ’
-java:S3655H"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜ì„8ª¨ØÍ2J$edb58b7b-b67d-4209-abed-6b649fd9d90f
-t
-java:S1602i",Remove useless curly braces around statement(Ïò¤Äúÿÿÿÿ8¶¨ØÍ2J$0061dc94-0de7-4876-87b8-cb9cd4f0b241
+java:S3655O"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜ì„8Ï×İ“Ó2J$547562a0-b9b2-4ab1-9681-4fc82e5121a7
+“
+java:S3655g"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Ï°§Ï8Ï×İ“Ó2J$87bceb68-8af8-4ab1-b27b-e340b32fd4a8
+€
+java:S1128"=Remove this unused import 'org.ems.demo.service.UserService'.(ğï¹’8à×İ“Ó2J$de6114fd-3d57-468e-b100-91693141f18e

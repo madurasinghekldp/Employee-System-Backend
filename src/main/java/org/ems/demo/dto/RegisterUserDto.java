@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RegisterUserDto {
     @Email(message = "Please enter a valid email Id")
@@ -17,6 +19,6 @@ public class RegisterUserDto {
     @Size(min=3,message = "Last name must have at least 3 characters.")
     private String lastName;
     @NotEmpty(message = "User role must be selected.")
-    private String userRoleName;
+    private List<String> userRoleName;
     private Company company;
 }

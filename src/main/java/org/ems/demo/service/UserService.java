@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.ems.demo.dto.*;
 import org.ems.demo.entity.CompanyEntity;
+import org.ems.demo.entity.EmployeeEntity;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.entity.UserRoleEntity;
 import org.ems.demo.exception.UserException;
 import org.ems.demo.repository.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class UserService {
     private final UserRoleRepository userRoleRepository;
     private final CompanyService companyService;
     private final PasswordEncoder passwordEncoder;
-
+    private final EmployeeRepository employeeRepository;
     private final EmailService emailService;
     private final ObjectMapper mapper;
 
@@ -36,7 +38,8 @@ public class UserService {
             CompanyService companyService,
             UserRoleRepository userRoleRepository,
             PasswordEncoder passwordEncoder,
-            EmailService emailService
+            EmailService emailService,
+            EmployeeRepository employeeRepository
     ) {
         this.userRepository = userRepository;
         this.mapper = mapper;
@@ -45,6 +48,7 @@ public class UserService {
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.employeeRepository = employeeRepository;
     }
 
     public List<UserEntity> allUsers() {
@@ -67,17 +71,65 @@ public class UserService {
         return mappeduser;
     }
 
+    @Transactional
     public User createUser(RegisterUserDto user) {
         try{
             CompanyEntity company = companyService.getById(user.getCompany()).get();
-            UserRoleEntity userRole = userRoleRepository.findByName(user.getUserRoleName()).get();
+            Optional<UserEntity> byEmail = userRepository.findByEmail(user.getEmail());
+            List<UserRoleEntity> userRoleList = new ArrayList<>();
+            for (String name: user.getUserRoleName()) {
+                userRoleList.add(userRoleRepository.findByName(name).get());
+            }
+
             UserEntity newUser = new UserEntity()
                     .setFirstName(user.getFirstName())
                     .setLastName(user.getLastName())
                     .setEmail(user.getEmail())
                     .setPassword(passwordEncoder.encode(user.getPassword()))
-                    .setUserRoleEntities(List.of(userRole))
+                    .setUserRoleEntities(userRoleList)
                     .setCompany(company);
+
+
+            if(user.getUserRoleName().contains("ROLE_EMP")){
+                if(byEmail.isPresent()){
+                    UserEntity userEntity = byEmail.get();
+                    if(!userEntity.isActive()){
+                        newUser.setId(userEntity.getId());
+                        newUser.setActive(true);
+                    }
+                    else{
+                        throw new UserException("User already exists.");
+                    }
+                }
+                UserEntity savedUser = userRepository.save(newUser);
+                Optional<EmployeeEntity> byUser = employeeRepository.findByUser(savedUser);
+                if(byUser.isPresent()) throw new UserException("Employee already exists.");
+                EmployeeEntity employeeEntity = new EmployeeEntity()
+                        .setUser(savedUser)
+                        .setCompany(company);
+                employeeRepository.save(employeeEntity);
+                emailService.sendSimpleMessage(newUser.getEmail(),
+                        "Welcome to EMPGO employee management system.",
+                        """
+                                You can login to system using your email\s
+                                and password as
+                                """+user.getPassword()+ """
+                            
+                            Thank you,
+                            empgo team.
+                            """);
+                return mapper.convertValue(savedUser,User.class);
+            }
+            if(byEmail.isPresent()){
+                UserEntity userEntity = byEmail.get();
+                if(!userEntity.isActive()){
+                    newUser.setId(userEntity.getId());
+                    newUser.setActive(true);
+                }
+                else{
+                    throw new UserException("User already exists.");
+                }
+            }
             UserEntity saved = userRepository.save(newUser);
             emailService.sendSimpleMessage(newUser.getEmail(),
                     "Welcome to EMPGO employee management system.",
@@ -90,6 +142,9 @@ public class UserService {
                             empgo team.
                             """);
             return mapper.convertValue(saved, User.class);
+        }
+        catch(UserException e){
+            throw e;
         }
         catch(Exception e){
             throw new UserException("User is not created!");
@@ -129,6 +184,10 @@ public class UserService {
         Optional<UserEntity> byId = userRepository.findById(id);
         if(byId.isEmpty()) throw new UserException("User not found!");
         UserEntity existingUser = byId.get();
+        Optional<EmployeeEntity> byUser = employeeRepository.findByUser(existingUser);
+        if(byUser.isPresent()){
+            employeeRepository.deleteById(byUser.get().getId());
+        }
         existingUser.setActive(false);
         userRepository.save(existingUser);
     }

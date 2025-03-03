@@ -32,4 +32,9 @@ public class LeaveEntity {
 
     private Date endDate;
 
+    @ManyToOne
+    @JoinColumn(name = "approved_by")
+    @JsonBackReference(value = "user-leave")
+    private UserEntity approvedBy;
+
 }

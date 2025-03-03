@@ -34,4 +34,10 @@ public class TaskEntity {
     @JoinColumn(name = "employee_id")
     @JsonBackReference(value = "employee-task")
     private EmployeeEntity employee;
+
+    private String status;
+    @ManyToOne
+    @JoinColumn(name = "approved_by_id")
+    @JsonBackReference(value = "user-task")
+    private UserEntity approvedBy;
 }

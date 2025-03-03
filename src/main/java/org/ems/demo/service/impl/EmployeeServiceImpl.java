@@ -2,19 +2,20 @@ package org.ems.demo.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ems.demo.dto.Department;
 import org.ems.demo.dto.Employee;
 import org.ems.demo.dto.Role;
-import org.ems.demo.entity.CompanyEntity;
-import org.ems.demo.entity.DepartmentEntity;
-import org.ems.demo.entity.EmployeeEntity;
-import org.ems.demo.entity.RoleEntity;
+import org.ems.demo.entity.*;
 import org.ems.demo.exception.EmployeeException;
 import org.ems.demo.repository.CompanyRepository;
 import org.ems.demo.repository.EmployeeNativeRepository;
 import org.ems.demo.repository.EmployeeRepository;
+import org.ems.demo.repository.UserRepository;
 import org.ems.demo.service.EmployeeService;
+import org.ems.demo.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository repository;
     private final EmployeeNativeRepository nativeRepository;
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
     private final ObjectMapper mapper;
 
     @Override
@@ -60,19 +63,26 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = mapper.convertValue(emp, Employee.class);
             employee.setDepartment(department);
             employee.setRole(role);
+            employee.setFirstName(emp.getUser().getFirstName());
+            employee.setLastName(emp.getUser().getLastName());
+            employee.setEmail(emp.getUser().getEmail());
             empList.add(employee);
         });
         return empList;
     }
 
+    @Transactional
     @Override
     public void updateEmp(Employee employee) {
         if(repository.existsById(employee.getId())){
             try{
                 EmployeeEntity existingEmployee = repository.findById(employee.getId()).get();
-                existingEmployee.setFirstName(employee.getFirstName());
-                existingEmployee.setLastName(employee.getLastName());
-                existingEmployee.setEmail(employee.getEmail());
+                UserEntity userEntity = existingEmployee.getUser();
+                userEntity.setFirstName(employee.getFirstName());
+                userEntity.setLastName(employee.getLastName());
+                userEntity.setEmail(employee.getEmail());
+                UserEntity savedUser = userRepository.save(userEntity);
+                existingEmployee.setUser(savedUser);
                 existingEmployee.setRole(mapper.convertValue(employee.getRole(), RoleEntity.class));
                 existingEmployee.setDepartment(mapper.convertValue(employee.getDepartment(), DepartmentEntity.class));
                 repository.save(existingEmployee);
@@ -86,9 +96,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteEmp(Long id) {
         if(repository.existsById(id)){
+            EmployeeEntity employee = repository.findById(id).get();
+            UserEntity user = employee.getUser();
+            user.setActive(false);
+            userRepository.save(user);
             repository.deleteById(id);
         }
         else{
@@ -103,7 +118,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             List<Employee> empList = new ArrayList<>();
             all.forEach(
                     emp -> {
-                        empList.add(mapper.convertValue(emp, Employee.class));
+                        Employee employee = mapper.convertValue(emp, Employee.class);
+                        employee.setFirstName(emp.getUser().getFirstName());
+                        employee.setLastName(emp.getUser().getLastName());
+                        empList.add(employee);
                     }
             );
             return empList;

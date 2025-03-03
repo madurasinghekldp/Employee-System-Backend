@@ -70,7 +70,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void deleteRole(Long id) {
         if(repository.existsById(id)){
-            repository.deleteById(id);
+            try{
+                repository.deleteById(id);
+            }
+            catch(Exception e){
+                throw new RoleException("Role is not deleted!");
+            }
         }
         else{
             throw new RoleException("Role is not found!");

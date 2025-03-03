@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ems.demo.dto.SuccessResponse;
 import org.ems.demo.dto.Task;
+import org.ems.demo.dto.TaskByUser;
 import org.ems.demo.security.PermissionRequired;
 import org.ems.demo.service.TaskService;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +39,37 @@ public class TaskController {
         return ResponseEntity.ok().body(successResponse);
     }
 
+    @GetMapping("/all-by-user")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getAllTaskByUser(
+            @RequestParam(name="userId") Integer id,
+            @RequestParam(name="limit") int limit,
+            @RequestParam(name="offset") int offset
+    ){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getAllTaskByUser(id,limit,offset))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
     @PutMapping()
-    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> updateTask(
             @Valid @RequestBody Task task
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(taskService.updateTask(task))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @PutMapping("/by-user")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> updateTaskByUser(
+            @Valid @RequestBody TaskByUser task
+    ){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.updateTaskByUser(task))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

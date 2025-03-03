@@ -1,6 +1,7 @@
 package org.ems.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -61,6 +62,13 @@ public class UserEntity implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "approvedBy", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "user-task")
+    private List<TaskEntity> tasks;
+
+    @OneToMany(mappedBy = "approvedBy", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "user-leave")
+    private List<LeaveEntity> leaves;
 
     private boolean isActive = true;
 

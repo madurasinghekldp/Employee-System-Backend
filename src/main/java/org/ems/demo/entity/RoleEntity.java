@@ -23,7 +23,7 @@ public class RoleEntity {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST,CascadeType.MERGE}, orphanRemoval = false)
     @JsonManagedReference(value = "role-employee")
     private List<EmployeeEntity> employees;
 

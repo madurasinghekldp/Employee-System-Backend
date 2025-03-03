@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class User {
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     @Email(message = "Please enter a valid email Id")
