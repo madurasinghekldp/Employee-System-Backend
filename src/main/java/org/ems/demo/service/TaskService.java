@@ -4,6 +4,7 @@ import org.ems.demo.dto.Task;
 import org.ems.demo.dto.TaskByUser;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TaskService {
     Task createTask(Task task);
@@ -15,4 +16,10 @@ public interface TaskService {
     Task updateTaskByUser(TaskByUser task);
 
     void deleteTask(Long id);
+
+    Map<String, Integer> getTaskByStatus(Long companyId);
+
+    Integer getTaskCountsByUser(Integer userId);
+
+    Map<String, Integer> getTaskByStatusByUser(Integer userId);
 }

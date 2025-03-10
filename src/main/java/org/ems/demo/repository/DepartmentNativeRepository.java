@@ -12,4 +12,6 @@ import java.util.List;
 public interface DepartmentNativeRepository {
 
     List<DepartmentEntity> getSelected(Long companyId, String l, String o, String s);
+
+    Integer getCount(Long companyId);
 }

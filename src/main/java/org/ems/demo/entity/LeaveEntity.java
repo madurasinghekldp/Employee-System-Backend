@@ -37,4 +37,6 @@ public class LeaveEntity {
     @JsonBackReference(value = "user-leave")
     private UserEntity approvedBy;
 
+    private Integer dayCount;
+
 }

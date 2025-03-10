@@ -73,4 +73,31 @@ public class LeaveController {
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
+
+    @GetMapping("/company-leaves")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getLeaveCountsByDate(@RequestParam(name="companyId") Long companyId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(leaveService.getLeaveCounts(companyId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/user-leaves")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getLeaveCountsByDateByUser(@RequestParam(name="userId") Integer userId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(leaveService.getLeaveCountsDatesByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/count")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getLeaveCountsByUser(@RequestParam(name="userId") Integer userId) {
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(leaveService.getLeaveCountsByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
 }

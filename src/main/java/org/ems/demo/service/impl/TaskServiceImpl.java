@@ -22,10 +22,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -178,6 +175,21 @@ public class TaskServiceImpl implements TaskService {
         catch(Exception e){
             throw new TaskException("Task is not deleted!");
         }
+    }
+
+    @Override
+    public Map<String, Integer> getTaskByStatus(Long companyId) {
+        return taskNativeRepository.getTasksByStatus(companyId);
+    }
+
+    @Override
+    public Integer getTaskCountsByUser(Integer userId) {
+        return taskNativeRepository.getTasksCountByUser(userId);
+    }
+
+    @Override
+    public Map<String, Integer> getTaskByStatusByUser(Integer userId) {
+        return taskNativeRepository.getTasksByStatusByUser(userId);
     }
 
     private int calculateOverDues(Date completedDate, Date dueDate) {

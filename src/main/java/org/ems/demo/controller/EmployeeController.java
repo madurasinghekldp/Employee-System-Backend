@@ -30,10 +30,13 @@ public class EmployeeController {
 
     @GetMapping("all")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> getAll(@RequestParam(name="companyId") Long companyId){
+    public ResponseEntity<SuccessResponse> getAll(
+            @RequestParam(name="companyId") Long companyId,
+            @RequestParam(name = "departmentId") Long departmentId
+    ){
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
-                .data(employeeService.getAll(companyId))
+                .data(employeeService.getAll(companyId,departmentId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
@@ -71,6 +74,16 @@ public class EmployeeController {
         employeeService.deleteEmp(id);
         SuccessResponse successResponse = SuccessResponse.builder()
                 //.status(successStatus)
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/count")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getEmployeeCount(@RequestParam(name="companyId") Long companyId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                //.status(successStatus)
+                .data(employeeService.getCount(companyId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

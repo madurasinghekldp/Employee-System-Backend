@@ -14,4 +14,6 @@ public interface DepartmentService {
     void updateDep(Department department);
 
     void deleteDep(Long id);
+
+    Integer getCount(Long companyId);
 }

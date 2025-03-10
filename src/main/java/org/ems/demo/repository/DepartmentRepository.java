@@ -9,4 +9,5 @@ import java.util.List;
 public interface DepartmentRepository extends CrudRepository<DepartmentEntity,Long> {
 
     List<DepartmentEntity> findAllByCompany(CompanyEntity company);
+
 }

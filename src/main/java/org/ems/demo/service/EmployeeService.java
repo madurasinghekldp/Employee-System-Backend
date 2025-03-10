@@ -13,5 +13,7 @@ public interface EmployeeService {
 
     void deleteEmp(Long id);
 
-    List<Employee> getAll(Long companyId);
+    List<Employee> getAll(Long companyId, Long departmentId);
+
+    Integer getCount(Long companyId);
 }

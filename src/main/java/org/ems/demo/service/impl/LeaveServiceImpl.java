@@ -18,8 +18,11 @@ import org.ems.demo.service.EmailService;
 import org.ems.demo.service.LeaveService;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,6 +49,10 @@ public class LeaveServiceImpl implements LeaveService {
                 throw new LeaveException("Employee is not found!");
             }
             LeaveEntity leaveEntity = mapper.convertValue(leave,LeaveEntity.class);
+            long between = ChronoUnit.DAYS.between(
+                    leave.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    leave.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            leaveEntity.setDayCount((int)between+1);
             leaveEntity.setEmployee(employeeEntity.get());
             return mapper.convertValue(leaveRepository.save(leaveEntity), Leave.class);
         }
@@ -89,6 +96,10 @@ public class LeaveServiceImpl implements LeaveService {
             LeaveEntity leaveEntity = byId.get();
             leaveEntity.setEndDate(leave.getEndDate());
             leaveEntity.setStartDate(leave.getStartDate());
+            long between = ChronoUnit.DAYS.between(
+                    leave.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    leave.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            leaveEntity.setDayCount((int)between+1);
             if(leave.getApprovedBy()!=null){
                 Optional<UserEntity> optionalUser = userRepository.findById(leave.getApprovedBy().getId());
                 if(optionalUser.isEmpty()) throw new LeaveException("User is not found");
@@ -155,5 +166,20 @@ public class LeaveServiceImpl implements LeaveService {
         catch(Exception e){
             throw new LeaveException("Unknown error occurred");
         }
+    }
+
+    @Override
+    public Map<String, Integer> getLeaveCounts(Long companyId) {
+        return leaveNativeRepository.getLeaveCounts(companyId);
+    }
+
+    @Override
+    public Integer getLeaveCountsByUser(Integer userId) {
+        return leaveNativeRepository.getLeaveCountsByUser(userId);
+    }
+
+    @Override
+    public Map<String, Integer> getLeaveCountsDatesByUser(Integer userId) {
+        return leaveNativeRepository.getLeaveCountsDatesByUser(userId);
     }
 }

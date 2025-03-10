@@ -94,4 +94,9 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new DepartmentException("Department is not found!");
         }
     }
+
+    @Override
+    public Integer getCount(Long companyId) {
+        return nativeRepository.getCount(companyId);
+    }
 }

@@ -76,4 +76,13 @@ public class DepartmentController {
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
+
+    @GetMapping("/count")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getDepartmentCount(@RequestParam(name="companyId") Long companyId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(departmentService.getCount(companyId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
 }

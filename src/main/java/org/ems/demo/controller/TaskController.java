@@ -84,4 +84,31 @@ public class TaskController {
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
+
+    @GetMapping("/get-by-status")
+    @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getTaskByStatus(@RequestParam(name="companyId") Long companyId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getTaskByStatus(companyId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/count")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getTaskCountsByUser(@RequestParam(name="userId") Integer userId) {
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getTaskCountsByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/get-by-status-user")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getTaskByStatusByUser(@RequestParam(name="userId") Integer userId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getTaskByStatusByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
 }

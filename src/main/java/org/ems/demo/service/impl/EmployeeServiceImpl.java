@@ -13,7 +13,6 @@ import org.ems.demo.repository.EmployeeNativeRepository;
 import org.ems.demo.repository.EmployeeRepository;
 import org.ems.demo.repository.UserRepository;
 import org.ems.demo.service.EmployeeService;
-import org.ems.demo.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -112,9 +111,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAll(Long companyId) {
+    public List<Employee> getAll(Long companyId, Long departmentId) {
         try{
-            List<EmployeeEntity> all = nativeRepository.getAll(companyId);
+            List<EmployeeEntity> all = nativeRepository.getAll(companyId,departmentId);
             List<Employee> empList = new ArrayList<>();
             all.forEach(
                     emp -> {
@@ -130,5 +129,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeException("No employees found!");
         }
 
+    }
+
+    @Override
+    public Integer getCount(Long companyId) {
+        return nativeRepository.getCount(companyId);
     }
 }

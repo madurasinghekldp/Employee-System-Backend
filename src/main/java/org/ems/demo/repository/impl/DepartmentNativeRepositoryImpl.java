@@ -37,4 +37,12 @@ public class DepartmentNativeRepositoryImpl implements DepartmentNativeRepositor
                 companyId,"%"+s+"%","%"+s+"%","%"+s+"%", limit, offset
         );
     }
+
+    @Override
+    public Integer getCount(Long companyId) {
+        String sql = """
+                select count(id) from department where company_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql,Integer.class,companyId);
+    }
 }

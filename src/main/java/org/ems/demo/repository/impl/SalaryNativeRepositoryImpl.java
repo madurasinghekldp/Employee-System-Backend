@@ -18,8 +18,7 @@ public class SalaryNativeRepositoryImpl implements SalaryNativeRepository {
     public List<SalaryEntity> getAllSalaryByEmployee(Long employeeId, int limit, int offset) {
         String sql = """
                 select s.id, s.payment, s.payment_date from salary s\s
-                inner join employee e on e.id = s.employee_id\s
-                where e.id = ?\s
+                where s.employee_id = ?\s
                 order by s.id desc limit ? offset ?
                 """;
         return jdbcTemplate.query(

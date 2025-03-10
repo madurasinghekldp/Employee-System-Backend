@@ -110,14 +110,14 @@ public class UserService {
                 employeeRepository.save(employeeEntity);
                 emailService.sendSimpleMessage(newUser.getEmail(),
                         "Welcome to EMPGO employee management system.",
-                        """
+                        String.format("""
                                 You can login to system using your email\s
                                 and password as
-                                """+user.getPassword()+ """
+                                %s
                             
-                            Thank you,
-                            empgo team.
-                            """);
+                                Thank you,
+                                empgo team.
+                                """,user.getPassword()));
                 return mapper.convertValue(savedUser,User.class);
             }
             if(byEmail.isPresent()){
@@ -133,14 +133,14 @@ public class UserService {
             UserEntity saved = userRepository.save(newUser);
             emailService.sendSimpleMessage(newUser.getEmail(),
                     "Welcome to EMPGO employee management system.",
-                    """
-                            You can login to system using your email\s
-                            and password as
-                            """+user.getPassword()+ """
+                    String.format("""
+                                You can login to system using your email\s
+                                and password as
+                                %s
                             
-                            Thank you,
-                            empgo team.
-                            """);
+                                Thank you,
+                                empgo team.
+                                """,user.getPassword()));
             return mapper.convertValue(saved, User.class);
         }
         catch(UserException e){

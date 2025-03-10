@@ -81,12 +81,11 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
     }
 
     @Override
-    public List<EmployeeEntity> getAll(Long companyId) {
+    public List<EmployeeEntity> getAll(Long companyId, Long departmentId) {
         String sql = """
                 select e.id, u.first_name, u.last_name from employee e\s
-                inner join company c on c.id = e.company_id\s
                 inner join users u on u.id = e.user_id\s
-                where c.id = ? and u.is_active = true
+                where e.company_id = ? and e.department_id = ? and u.is_active = true
                 """;
 
         return jdbcTemplate.query(
@@ -107,7 +106,15 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                             null
                     );
                 },
-                companyId
+                companyId,departmentId
         );
+    }
+
+    @Override
+    public Integer getCount(Long companyId) {
+        String sql = """
+                select count(id) from employee where company_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql,Integer.class,companyId);
     }
 }
