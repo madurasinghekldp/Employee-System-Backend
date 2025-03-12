@@ -1,0 +1,7 @@
+
+“
+java:S3655C"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(²õ¡‚8ë·¬’Ó2J$2c5f8821-861a-4245-b0dc-fd4a0c2c58dd
+ƒ
+java:S1128";Remove this unused import 'lombok.RequiredArgsConstructor'.(ÑØŽúøÿÿÿÿ8‚¸¬’Ó2J$c502fe40-5e33-46d9-b7ca-a9ae9145dd8b
+r
+java:S1068#"*Remove this unused "mapper" private field.(¤¡Ùêøÿÿÿÿ8­™Ÿ‰Ó2J$ad13851a-47b9-45a6-a994-30c4094050ca

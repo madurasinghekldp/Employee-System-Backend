@@ -1,0 +1,14 @@
+
+~	java:S125!"<This block of commented-out lines of code should be removed.(º¤¦«8î…ÆöÉ2J$4d55646a-4175-4c11-9e94-b75d5ff8654d
+€
+java:S1128"8Remove this unused import 'jakarta.servlet.http.Cookie'.(Ê‘¡¹úÿÿÿÿ8Ê¹ë§Ñ2J$42342d6c-5270-49ed-be4d-3ddf3c7c7c81
+ƒ
+java:S1128";Remove this unused import 'lombok.RequiredArgsConstructor'.(ÑØúøÿÿÿÿ8Ë¹ë§Ñ2J$30d202bc-5265-404b-a1ea-73d0fd531156
+‰
+java:S1128"ARemove this unused import 'org.springframework.http.HttpHeaders'.(ãŸñ×úÿÿÿÿ8Ë¹ë§Ñ2J$0829763d-6531-4bec-a01c-1eb810a6c919
+Œ
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseCookie'.(çµùÿÿÿÿ8Ë¹ë§Ñ2J$c758e774-0794-4bbb-b963-c244c7a2472a
+™
+java:S1128"VRemove this unused import 'org.springframework.security.core.userdetails.UserDetails'.(ÊÁ¥8Ë¹ë§Ñ2J$5fccfbb3-9f91-4f06-b8eb-cbb210cdca4e
+~
+java:S1068 "6Remove this unused "userDetailsService" private field.(©ÉŸ›ûÿÿÿÿ8ôÇƒÈÉ2J$81107fdb-697c-4eca-86c1-470c3dbeed9c

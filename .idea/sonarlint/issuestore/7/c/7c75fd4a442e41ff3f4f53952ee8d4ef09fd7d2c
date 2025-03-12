@@ -1,0 +1,11 @@
+
+™
+java:S1192"PDefine a constant instead of duplicating this literal "User not found!" 3 times.(ãç‘ãùÿÿÿÿ8ô¤¼¸Ö2J$a72585c3-b8c3-440a-b69e-7f9b70b578ef
+“
+java:S3655Q"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(²õ¡‚8Ş¥¼¸Ö2J$e8a88fdb-5b39-4aa2-918a-160f4b7ac482
+˜
+java:S3655M"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ğ€Áªşÿÿÿÿ8Ş¥¼¸Ö2J$776d732b-f5f4-44bb-bb6b-ee34cf6134c3
+•
+java:S3776K"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Øò˜“8ê¥¼¸Ö2J$155463b4-98b9-411b-a932-1030450c4ef7
+q
+java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8¦¼¸Ö2J$9025fe1a-be66-4358-b4bd-5d2ebcd362f6

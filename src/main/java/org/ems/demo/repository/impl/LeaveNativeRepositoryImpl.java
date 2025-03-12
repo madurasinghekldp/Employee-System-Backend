@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +109,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 """;
 
         return jdbcTemplate.query(sql,rs->{
-            Map<String,Integer> leaveCountGroup = new HashMap<>();
+            Map<String,Integer> leaveCountGroup = new LinkedHashMap<>();
             while(rs.next()){
                 leaveCountGroup.put(rs.getString("leave_date"),rs.getInt("total_leave_days"));
             }
@@ -139,7 +140,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 """;
 
         return jdbcTemplate.query(sql,rs->{
-            Map<String,Integer> leaveCounts = new HashMap<>();
+            Map<String,Integer> leaveCounts = new LinkedHashMap<>();
             while(rs.next()){
                 leaveCounts.put(rs.getString("leave_date"),rs.getInt("leave_days"));
             }
