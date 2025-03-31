@@ -19,5 +19,6 @@ public class User {
     @Email(message = "Please enter a valid email Id")
     @NotEmpty(message = "Must not be Empty and NULL")
     private String email;
+    private String profileImage;
     private Company company;
 }

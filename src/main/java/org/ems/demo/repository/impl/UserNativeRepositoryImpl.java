@@ -16,7 +16,8 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
     @Override
     public UserEntity getUserByEmail(String email) {
         String sql = """
-                select u.id, u.email, u.first_name, u.last_name, c.id, c.name, c.address, c.register_number\s
+                select u.id, u.email, u.first_name, u.last_name, u.profile_image, c.id, c.name, c.address,\s
+                c.register_number, c.annual_leaves, c.casual_leaves, c.logo\s
                 from users u\s
                 inner join company c on u.company_id = c.id\s
                 where u.email = ?
@@ -29,7 +30,9 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
                             rs.getString("c.name"),
                             rs.getString("c.address"),
                             rs.getString("c.register_number"),
-                            null,null,null,null
+                            null,null,null,null,rs.getInt("c.annual_leaves"),
+                            rs.getInt("c.casual_leaves"),
+                            rs.getString("c.logo")
                     );
                     return new UserEntity(
                             rs.getInt("u.id"),
@@ -43,7 +46,8 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
                             null,
                             null,
                             null,
-                            true
+                            true,
+                            rs.getString("u.profile_image")
                     );
                 },
                 email

@@ -14,11 +14,14 @@ import java.util.Date;
 @AllArgsConstructor
 public class Leave {
     private Long id;
-    @NotNull(message = "Employee must be selected.")
-    private Employee employee;
-    @NotNull(message = "Start date should be provided.")
-    private Date startDate;
-    @NotNull(message = "End date should be provided.")
-    private Date endDate;
+    @NotNull(message = "User should be provided.")
+
+    private Date date;
+    @NotNull(message = "Reason should be provided.")
+    private String reason;
+    @NotNull(message = "Leave type should be provided.")
+    private LeaveType leaveType;
+    @NotNull(message = "Day count should be provided.")
+    private Double dayCount;
     private User approvedBy;
 }

@@ -11,4 +11,7 @@ public class Company {
     @Size(min=10,message = "Company address must contain at least 10 characters.")
     private String address;
     private String registerNumber;
+    private Integer annualLeaves;
+    private Integer casualLeaves;
+    private String logo;
 }

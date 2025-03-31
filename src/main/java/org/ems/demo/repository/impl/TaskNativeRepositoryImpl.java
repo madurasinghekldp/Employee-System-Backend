@@ -44,7 +44,8 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                             null,
                             null,
                             null,
-                            true
+                            true,
+                            null
                     );
 
                     return new TaskEntity(
@@ -91,7 +92,8 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                             null,
                             null,
                             null,
-                            true
+                            true,
+                            null
                     );
 
                     return new TaskEntity(

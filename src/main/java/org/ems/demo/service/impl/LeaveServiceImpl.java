@@ -49,10 +49,7 @@ public class LeaveServiceImpl implements LeaveService {
                 throw new LeaveException("Employee is not found!");
             }
             LeaveEntity leaveEntity = mapper.convertValue(leave,LeaveEntity.class);
-            long between = ChronoUnit.DAYS.between(
-                    leave.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    leave.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            leaveEntity.setDayCount((int)between+1);
+            leaveEntity.setDayCount(leave.getDayCount());
             leaveEntity.setEmployee(employeeEntity.get());
             return mapper.convertValue(leaveRepository.save(leaveEntity), Leave.class);
         }
@@ -94,12 +91,10 @@ public class LeaveServiceImpl implements LeaveService {
             Optional<LeaveEntity> byId = leaveRepository.findById(leave.getId());
             if(byId.isEmpty()) throw new LeaveException("Leave is not found");
             LeaveEntity leaveEntity = byId.get();
-            leaveEntity.setEndDate(leave.getEndDate());
-            leaveEntity.setStartDate(leave.getStartDate());
-            long between = ChronoUnit.DAYS.between(
-                    leave.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    leave.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            leaveEntity.setDayCount((int)between+1);
+            leaveEntity.setDate(leave.getDate());
+            leaveEntity.setReason(leave.getReason());
+            leaveEntity.setDayCount(leave.getDayCount());
+            leaveEntity.setLeaveType(leave.getLeaveType());
             if(leave.getApprovedBy()!=null){
                 Optional<UserEntity> optionalUser = userRepository.findById(leave.getApprovedBy().getId());
                 if(optionalUser.isEmpty()) throw new LeaveException("User is not found");
@@ -111,12 +106,12 @@ public class LeaveServiceImpl implements LeaveService {
                         "Your leave has been approved.",
                         String.format("""
                                 The leave you applied for has been approved.
-                                Start Date: %s
-                                End Date: %s
+                                Date: %s
+                                Day count: %s
                                 
                                 Thank you,
                                 %s
-                                """,saved.getStartDate(),saved.getEndDate(),saved.getEmployee().getCompany().getName())
+                                """,saved.getDate(),saved.getDayCount()==1?"1":"1/2",saved.getEmployee().getCompany().getName())
                         );
             }
             return mapper.convertValue(saved, Leave.class);
@@ -147,7 +142,7 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public List<Leave> getAllLeavesByUser(Integer userId, int limit, int offset) {
         try{
-            List<LeaveEntity> allLeavesByEmployee = leaveNativeRepository.getAllLeavesByEmployeeByUser(userId,limit,offset);
+            List<LeaveEntity> allLeavesByEmployee = leaveNativeRepository.getAllLeavesByUser(userId,limit,offset);
             if(allLeavesByEmployee.isEmpty()) throw new LeaveException("Leaves not found");
             List<Leave> leaveList = new ArrayList<>();
             allLeavesByEmployee.forEach(
@@ -164,12 +159,13 @@ public class LeaveServiceImpl implements LeaveService {
             throw e;
         }
         catch(Exception e){
+            log.info(e.toString());
             throw new LeaveException("Unknown error occurred");
         }
     }
 
     @Override
-    public Map<String, Integer> getLeaveCounts(Long companyId) {
+    public Map<String, Double> getLeaveCounts(Long companyId) {
         return leaveNativeRepository.getLeaveCounts(companyId);
     }
 
@@ -179,7 +175,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public Map<String, Integer> getLeaveCountsDatesByUser(Integer userId) {
+    public Map<String, Double> getLeaveCountsDatesByUser(Integer userId) {
         return leaveNativeRepository.getLeaveCountsDatesByUser(userId);
     }
 }

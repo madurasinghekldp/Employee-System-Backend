@@ -48,6 +48,8 @@ public class CompanyServiceImpl implements CompanyService {
             companyEntity.setName(company.getName());
             companyEntity.setAddress(company.getAddress());
             companyEntity.setRegisterNumber(company.getRegisterNumber());
+            companyEntity.setAnnualLeaves(company.getAnnualLeaves());
+            companyEntity.setCasualLeaves(company.getCasualLeaves());
             CompanyEntity saved = companyRepository.save(companyEntity);
             return mapper.convertValue(saved,Company.class);
         }

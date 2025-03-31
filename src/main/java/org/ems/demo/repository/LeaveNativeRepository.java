@@ -8,11 +8,11 @@ import java.util.Map;
 public interface LeaveNativeRepository {
     List<LeaveEntity> getAllLeavesByEmployee(Long employeeId,int limit,int offset);
 
-    List<LeaveEntity> getAllLeavesByEmployeeByUser(Integer userId, int limit, int offset);
+    List<LeaveEntity> getAllLeavesByUser(Integer userId, int limit, int offset);
 
-    Map<String, Integer> getLeaveCounts(Long companyId);
+    Map<String, Double> getLeaveCounts(Long companyId);
 
     Integer getLeaveCountsByUser(Integer userId);
 
-    Map<String, Integer> getLeaveCountsDatesByUser(Integer userId);
+    Map<String, Double> getLeaveCountsDatesByUser(Integer userId);
 }

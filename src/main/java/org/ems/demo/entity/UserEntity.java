@@ -72,6 +72,9 @@ public class UserEntity implements UserDetails {
 
     private boolean isActive = true;
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoleEntities;

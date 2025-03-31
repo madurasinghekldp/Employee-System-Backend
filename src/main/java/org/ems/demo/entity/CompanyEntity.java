@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString//(exclude = {"users", "departments", "roles", "employees"})
 @Entity
+@Accessors(chain = true)
 @Table(name="company")
 public class CompanyEntity {
     @Id
@@ -41,4 +43,23 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "company-employee")
     private List<EmployeeEntity> employees;
+
+    @Column(nullable = false)
+    private Integer annualLeaves = 14;
+
+    @Column(nullable = false)
+    private Integer casualLeaves = 7;
+
+    @Column(name = "logo")
+    private String logo;
+
+    @PrePersist
+    public void prePersist() {
+        if (annualLeaves == null) {
+            annualLeaves = 14;
+        }
+        if (casualLeaves == null) {
+            casualLeaves = 7;
+        }
+    }
 }

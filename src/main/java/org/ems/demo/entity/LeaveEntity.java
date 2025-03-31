@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.ems.demo.dto.LeaveType;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -28,15 +29,19 @@ public class LeaveEntity {
     @JsonBackReference(value = "employee-leave")
     private EmployeeEntity employee;
 
-    private Date startDate;
+    private Date date;
 
-    private Date endDate;
+    private String reason;
 
     @ManyToOne
     @JoinColumn(name = "approved_by")
     @JsonBackReference(value = "user-leave")
     private UserEntity approvedBy;
 
-    private Integer dayCount;
+    private Double dayCount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private LeaveType leaveType;
 
 }

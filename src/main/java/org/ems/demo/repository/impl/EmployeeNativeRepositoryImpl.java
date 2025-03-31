@@ -22,7 +22,7 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
     @Override
     public List<EmployeeEntity> getSelected(Long companyId, String l, String o, String s) {
         String sql = """
-                select e.id, u.id, u.first_name, u.last_name, u.email, d.id as department_id, d.name as department_name, d.description as department_description
+                select e.id, u.id, u.first_name, u.last_name, u.email, u.profile_image, d.id as department_id, d.name as department_name, d.description as department_description
                 , r.id as role_id, r.name as role_name, r.description as role_description\s
                 from employee e\s
                 left join department d on e.department_id = d.id\s
@@ -64,7 +64,8 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                             null,
                             null,
                             null,
-                            true
+                            true,
+                            rs.getString("u.profile_image")
                     );
 
                     return new EmployeeEntity(
