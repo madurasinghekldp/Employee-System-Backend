@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name="company")
 public class CompanyEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String address;

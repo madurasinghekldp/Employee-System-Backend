@@ -15,4 +15,8 @@ public interface LeaveNativeRepository {
     Integer getLeaveCountsByUser(Integer userId);
 
     Map<String, Double> getLeaveCountsDatesByUser(Integer userId);
+
+    Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId);
+
+    Double getLeaveCountByUserAndType(Integer userId, String leaveType);
 }

@@ -22,4 +22,5 @@ public interface LeaveService {
     Integer getLeaveCountsByUser(Integer userId);
 
     Map<String,Double> getLeaveCountsDatesByUser(Integer userId);
+    Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId);
 }

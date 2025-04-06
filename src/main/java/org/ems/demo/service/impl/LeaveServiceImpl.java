@@ -48,6 +48,17 @@ public class LeaveServiceImpl implements LeaveService {
             if(employeeEntity.isEmpty()){
                 throw new LeaveException("Employee is not found!");
             }
+
+            if(String.valueOf(leave.getLeaveType()).equals("ANNUAL")){
+                Double annuals = Double.valueOf(employeeEntity.get().getCompany().getAnnualLeaves());
+                Double annualTotal = leaveNativeRepository.getLeaveCountByUserAndType(byId.get().getId(), "ANNUAL");
+                if((annualTotal+leave.getDayCount())>annuals) throw new LeaveException("You are going to exceed available annual leave count.");
+            }
+            if(String.valueOf(leave.getLeaveType()).equals("CASUAL")){
+                Double casuals = Double.valueOf(employeeEntity.get().getCompany().getCasualLeaves());
+                Double casualTotal = leaveNativeRepository.getLeaveCountByUserAndType(byId.get().getId(), "CASUAL");
+                if((casualTotal+leave.getDayCount())>casuals) throw new LeaveException("You are going to exceed available casual leave count.");
+            }
             LeaveEntity leaveEntity = mapper.convertValue(leave,LeaveEntity.class);
             leaveEntity.setDayCount(leave.getDayCount());
             leaveEntity.setEmployee(employeeEntity.get());
@@ -177,5 +188,9 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public Map<String, Double> getLeaveCountsDatesByUser(Integer userId) {
         return leaveNativeRepository.getLeaveCountsDatesByUser(userId);
+    }
+
+    public Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId){
+        return leaveNativeRepository.getLeaveCategoriesCountsByUser(userId);
     }
 }

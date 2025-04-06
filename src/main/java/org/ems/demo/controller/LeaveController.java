@@ -100,4 +100,13 @@ public class LeaveController {
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
+
+    @GetMapping("/user-leave-category-count")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getLeaveCategoriesCountsByUser(@RequestParam(name="userId") Integer userId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(leaveService.getLeaveCategoriesCountsByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
 }

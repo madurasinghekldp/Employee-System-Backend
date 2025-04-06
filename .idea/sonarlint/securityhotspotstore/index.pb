@@ -726,3 +726,7 @@ j
 :src/main/java/org/ems/demo/controller/ImageController.java,b\1\b17bf01d6ab064e0cdf6503487e7090e91d58f46
 g
 7src/main/java/org/ems/demo/config/CloudinaryConfig.java,7\b\7bc2b42786c329afcb469e302f0c77a93382ff86
+d
+4src/main/java/org/ems/demo/entity/UserRolesAtId.java,5\0\50292927e2e92a1fa805cdc9e51801d6554e644d
+b
+2src/main/java/org/ems/demo/entity/UserRolesAt.java,e\8\e88cba482d6f7325ce0db9fd72f26c0aca2f1c1e

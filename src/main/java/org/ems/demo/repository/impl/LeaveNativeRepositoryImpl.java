@@ -160,4 +160,37 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
             return leaveCounts;
         },userId);
     }
+
+    @Override
+    public Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId) {
+        String sql = """
+                SELECT\s
+                l.leave_type as leave_type,\s
+                SUM(l.day_count) AS leave_count\s
+                FROM leaves l\s
+                INNER JOIN employee e ON e.id = l.employee_id\s
+                WHERE e.user_id = ? AND l.approved_by IS NOT null\s
+                AND YEAR(l.date) = YEAR(CURRENT_DATE)\s
+                GROUP BY l.leave_type
+                """;
+
+        return jdbcTemplate.query(sql,rs->{
+            Map<String,Double> leaveCounts = new LinkedHashMap<>();
+            while(rs.next()){
+                leaveCounts.put(rs.getString("leave_type"),rs.getDouble("leave_count"));
+            }
+            return leaveCounts;
+        },userId);
+    }
+
+    @Override
+    public Double getLeaveCountByUserAndType(Integer userId, String leaveType) {
+        String sql = """
+                select sum(l.day_count) from leaves l\s
+                inner join employee e on e.id = l.employee_id\s
+                where e.user_id = ? and l.approved_by is not null and l.leave_type = ?\s
+                AND YEAR(l.date) = YEAR(CURRENT_DATE)\s
+                """;
+        return jdbcTemplate.queryForObject(sql,Double.class,userId,leaveType);
+    }
 }

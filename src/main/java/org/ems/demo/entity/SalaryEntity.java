@@ -17,7 +17,7 @@ import java.util.Date;
 @Table(name="salary")
 public class SalaryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double payment;
     private Date paymentDate;
