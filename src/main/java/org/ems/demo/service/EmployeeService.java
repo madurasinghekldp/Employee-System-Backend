@@ -16,4 +16,5 @@ public interface EmployeeService {
     List<Employee> getAll(Long companyId, Long departmentId);
 
     Integer getCount(Long companyId);
+
 }

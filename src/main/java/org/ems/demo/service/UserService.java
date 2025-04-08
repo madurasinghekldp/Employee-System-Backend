@@ -151,7 +151,7 @@ public class UserService {
         }
     }
 
-    public User updateUser(Integer id, UpdateUser user) {
+    public User updateUser(Long id, UpdateUser user) {
         try{
             Optional<UserEntity> byId = userRepository.findById(id);
             if(byId.isEmpty()) throw new UserException("User not found!");
@@ -180,7 +180,7 @@ public class UserService {
         }
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteUser(Long id) {
         Optional<UserEntity> byId = userRepository.findById(id);
         if(byId.isEmpty()) throw new UserException("User not found!");
         UserEntity existingUser = byId.get();
@@ -192,7 +192,7 @@ public class UserService {
         userRepository.save(existingUser);
     }
 
-    public Object updatePassword(Integer id, UpdatePassword updatePassword) {
+    public Object updatePassword(Long id, UpdatePassword updatePassword) {
         try{
             Optional<UserEntity> byId = userRepository.findById(id);
             if(byId.isEmpty()) throw new UserException("User not found!");

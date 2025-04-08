@@ -30,7 +30,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 sql,
                 (rs,rowNum)->{
                     UserEntity user = new UserEntity(
-                            rs.getInt("u.id"),
+                            rs.getLong("u.id"),
                             rs.getString("u.first_name"),
                             rs.getString("u.last_name"),
                             null,
@@ -60,7 +60,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
     }
 
     @Override
-    public List<LeaveEntity> getAllLeavesByUser(Integer userId, int limit, int offset) {
+    public List<LeaveEntity> getAllLeavesByUser(Long userId, int limit, int offset) {
         String sql = """
                 select l.id, l.date, l.reason, l.leave_type, l.day_count, u.id, u.first_name, u.last_name from leaves l\s
                 inner join employee e on e.id = l.employee_id\s
@@ -73,7 +73,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 sql,
                 (rs,rowNum)->{
                     UserEntity user = new UserEntity(
-                            rs.getInt("u.id"),
+                            rs.getLong("u.id"),
                             rs.getString("u.first_name"),
                             rs.getString("u.last_name"),
                             null,
@@ -127,7 +127,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
     }
 
     @Override
-    public Integer getLeaveCountsByUser(Integer userId) {
+    public Integer getLeaveCountsByUser(Long userId) {
         String sql = """
                 select count(l.id) from leaves l\s
                 inner join employee e on e.id = l.employee_id\s
@@ -139,7 +139,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
     }
 
     @Override
-    public Map<String, Double> getLeaveCountsDatesByUser(Integer userId) {
+    public Map<String, Double> getLeaveCountsDatesByUser(Long userId) {
         String sql = """
                 SELECT\s
                 DATE(l.date) AS leave_date,\s
@@ -162,7 +162,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
     }
 
     @Override
-    public Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId) {
+    public Map<String, Double> getLeaveCategoriesCountsByUser(Long userId) {
         String sql = """
                 SELECT\s
                 l.leave_type as leave_type,\s
@@ -184,7 +184,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
     }
 
     @Override
-    public Double getLeaveCountByUserAndType(Integer userId, String leaveType) {
+    public Double getLeaveCountByUserAndType(Long userId, String leaveType) {
         String sql = """
                 select sum(l.day_count) from leaves l\s
                 inner join employee e on e.id = l.employee_id\s
@@ -192,5 +192,19 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 AND YEAR(l.date) = YEAR(CURRENT_DATE)\s
                 """;
         return jdbcTemplate.queryForObject(sql,Double.class,userId,leaveType);
+    }
+
+    @Override
+    public Map<String, Double> getEmployeeMonthlyLeaveCount(Long employeeId) {
+        String sql = """
+                select sum(day_count) from leaves\s
+                where approved_by is not null and employee_id = ?\s
+                AND MONTH(date) = MONTH(CURRENT_DATE)\s
+                AND YEAR(date) = YEAR(CURRENT_DATE)\s
+                """;
+        Double count = jdbcTemplate.queryForObject(sql, Double.class, employeeId);
+        Map<String,Double> leaveCounts = new HashMap<>();
+        leaveCounts.put("leave_count",count);
+        return leaveCounts;
     }
 }

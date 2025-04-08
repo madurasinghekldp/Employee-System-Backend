@@ -43,7 +43,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     }
 
     @Override
-    public String uploadProfile(MultipartFile file, Integer userId){
+    public String uploadProfile(MultipartFile file, Long userId){
         try{
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             //System.out.println(uploadResult.toString());

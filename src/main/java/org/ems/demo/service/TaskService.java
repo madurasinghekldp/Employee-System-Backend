@@ -10,7 +10,7 @@ public interface TaskService {
     Task createTask(Task task);
 
     List<Task> getAllTask(Long employeeId, int limit, int offset);
-    List<Task> getAllTaskByUser(Integer userId, int limit, int offset);
+    List<Task> getAllTaskByUser(Long userId, int limit, int offset);
 
     Task updateTask(Task task);
     Task updateTaskByUser(TaskByUser task);
@@ -19,7 +19,11 @@ public interface TaskService {
 
     Map<String, Integer> getTaskByStatus(Long companyId);
 
-    Integer getTaskCountsByUser(Integer userId);
+    Integer getTaskCountsByUser(Long userId);
 
-    Map<String, Integer> getTaskByStatusByUser(Integer userId);
+    Map<String, Integer> getTaskByStatusByUser(Long userId);
+
+    Map<String,Integer> getEmployeeMonthlyRejectedTasks(Long employeeId);
+
+    Map<String,Integer> getEmployeeMonthlyLateTasks(Long employeeId);
 }

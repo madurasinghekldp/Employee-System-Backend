@@ -33,7 +33,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                 sql,
                 (rs,rowNum)->{
                     UserEntity user = new UserEntity(
-                            rs.getInt("u.id"),
+                            rs.getLong("u.id"),
                             rs.getString("u.first_name"),
                             rs.getString("u.last_name"),
                             null,
@@ -65,7 +65,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
     }
 
     @Override
-    public List<TaskEntity> getAllTaskByUser(Integer userId, int limit, int offset) {
+    public List<TaskEntity> getAllTaskByUser(Long userId, int limit, int offset) {
         String sql = """
                 select t.id, t.task_name, t.start_date, t.due_date, t.completed_date, t.over_dues, t.status,\s
                 u.id, u.first_name, u.last_name\s
@@ -81,7 +81,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                 sql,
                 (rs,rowNum)->{
                     UserEntity user = new UserEntity(
-                            rs.getInt("u.id"),
+                            rs.getLong("u.id"),
                             rs.getString("u.first_name"),
                             rs.getString("u.last_name"),
                             null,
@@ -131,7 +131,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
     }
 
     @Override
-    public Integer getTasksCountByUser(Integer userId) {
+    public Integer getTasksCountByUser(Long userId) {
         String sql = """
                 select count(t.id) from tasks t\s
                 inner join employee e on e.id = t.employee_id\s
@@ -141,7 +141,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
     }
 
     @Override
-    public Map<String, Integer> getTasksByStatusByUser(Integer userId) {
+    public Map<String, Integer> getTasksByStatusByUser(Long userId) {
         String sql = """
                 select t.status as status, count(t.id) as task_count from tasks t\s
                 inner join employee e on e.id = t.employee_id\s
@@ -156,5 +156,36 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
             }
             return taskCountGroup;
         },userId);
+    }
+
+    @Override
+    public Map<String, Integer> getEmployeeMonthlyRejectedTasks(Long employeeId) {
+        String sql = """
+                select count(id) from tasks\s
+                where employee_id = ? and status = 'rejected'\s
+                AND MONTH(due_date) = MONTH(CURRENT_DATE)\s
+                AND YEAR(due_date) = YEAR(CURRENT_DATE)\s
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, employeeId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("rejected_count", count);
+        return result;
+    }
+
+    @Override
+    public Map<String, Integer> getEmployeeMonthlyLateTasks(Long employeeId) {
+        String sql = """
+                select count(id) from tasks\s
+                where employee_id = ?\s
+                AND (
+                    (status = 'completed' AND over_dues <> 0 AND MONTH(due_date) = MONTH(CURRENT_DATE) AND YEAR(due_date) = YEAR(CURRENT_DATE))
+                    OR (status = 'pending' AND due_date < CURRENT_DATE AND MONTH(due_date) = MONTH(CURRENT_DATE) AND YEAR(due_date) = YEAR(CURRENT_DATE))
+                    OR (status = 'working' AND due_date < CURRENT_DATE AND MONTH(due_date) = MONTH(CURRENT_DATE) AND YEAR(due_date) = YEAR(CURRENT_DATE))
+                  )
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, employeeId);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("late_count", count);
+        return result;
     }
 }

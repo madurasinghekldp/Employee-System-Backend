@@ -21,7 +21,7 @@ public class ImageController {
     @PermissionRequired(values = {"ROLE_USER", "ROLE_ADMIN", "ROLE_EMP"})
     public ResponseEntity<SuccessResponse> uploadProfile(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("userId") Integer userId
+            @RequestParam("userId") Long userId
     ) {
 
         SuccessResponse successResponse = SuccessResponse.builder()

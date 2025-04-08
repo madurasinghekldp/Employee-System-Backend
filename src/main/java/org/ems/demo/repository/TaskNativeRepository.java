@@ -9,11 +9,15 @@ public interface TaskNativeRepository {
 
     List<TaskEntity> getAllTaskByEmployee(Long employeeId, int limit, int offset);
 
-    List<TaskEntity> getAllTaskByUser(Integer userId, int limit, int offset);
+    List<TaskEntity> getAllTaskByUser(Long userId, int limit, int offset);
 
     Map<String, Integer> getTasksByStatus(Long companyId);
 
-    Integer getTasksCountByUser(Integer userId);
+    Integer getTasksCountByUser(Long userId);
 
-    Map<String, Integer> getTasksByStatusByUser(Integer userId);
+    Map<String, Integer> getTasksByStatusByUser(Long userId);
+
+    Map<String, Integer> getEmployeeMonthlyRejectedTasks(Long employeeId);
+
+    Map<String, Integer> getEmployeeMonthlyLateTasks(Long employeeId);
 }

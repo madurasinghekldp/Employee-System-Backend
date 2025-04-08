@@ -92,7 +92,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTaskByUser(Integer userId, int limit, int offset) {
+    public List<Task> getAllTaskByUser(Long userId, int limit, int offset) {
         try{
             List<TaskEntity> allTaskByEmployee = taskNativeRepository.getAllTaskByUser(userId, limit, offset);
             if(allTaskByEmployee.isEmpty()) throw new TaskException("Tasks not found!");
@@ -183,13 +183,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Integer getTaskCountsByUser(Integer userId) {
+    public Integer getTaskCountsByUser(Long userId) {
         return taskNativeRepository.getTasksCountByUser(userId);
     }
 
     @Override
-    public Map<String, Integer> getTaskByStatusByUser(Integer userId) {
+    public Map<String, Integer> getTaskByStatusByUser(Long userId) {
         return taskNativeRepository.getTasksByStatusByUser(userId);
+    }
+
+    @Override
+    public Map<String, Integer> getEmployeeMonthlyRejectedTasks(Long employeeId) {
+        return taskNativeRepository.getEmployeeMonthlyRejectedTasks(employeeId);
+    }
+
+    @Override
+    public Map<String, Integer> getEmployeeMonthlyLateTasks(Long employeeId) {
+        return taskNativeRepository.getEmployeeMonthlyLateTasks(employeeId);
     }
 
     private int calculateOverDues(Date completedDate, Date dueDate) {

@@ -54,7 +54,7 @@ public class UserController {
     @PatchMapping("/profile")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> updateUser(
-            @RequestParam(name="id") Integer id,
+            @RequestParam(name="id") Long id,
             @Valid @RequestBody UpdateUser user
     ){
         SuccessResponse successResponse = SuccessResponse.builder()
@@ -66,7 +66,7 @@ public class UserController {
     @PatchMapping("/password")
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> updatePassword(
-            @RequestParam(name="id") Integer id,
+            @RequestParam(name="id") Long id,
             @Valid @RequestBody UpdatePassword updatePassword
             ){
         SuccessResponse successResponse = SuccessResponse.builder()
@@ -78,7 +78,7 @@ public class UserController {
     @DeleteMapping
     @PermissionRequired(values={"ROLE_USER","ROLE_ADMIN","ROLE_EMP"})
     public ResponseEntity<SuccessResponse> deleteUser(
-            @RequestParam(name="id") Integer id
+            @RequestParam(name="id") Long id
     ){
         userService.deleteUser(id);
         SuccessResponse successResponse = SuccessResponse.builder()

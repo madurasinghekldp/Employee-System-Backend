@@ -151,7 +151,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public List<Leave> getAllLeavesByUser(Integer userId, int limit, int offset) {
+    public List<Leave> getAllLeavesByUser(Long userId, int limit, int offset) {
         try{
             List<LeaveEntity> allLeavesByEmployee = leaveNativeRepository.getAllLeavesByUser(userId,limit,offset);
             if(allLeavesByEmployee.isEmpty()) throw new LeaveException("Leaves not found");
@@ -181,16 +181,21 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public Integer getLeaveCountsByUser(Integer userId) {
+    public Integer getLeaveCountsByUser(Long userId) {
         return leaveNativeRepository.getLeaveCountsByUser(userId);
     }
 
     @Override
-    public Map<String, Double> getLeaveCountsDatesByUser(Integer userId) {
+    public Map<String, Double> getLeaveCountsDatesByUser(Long userId) {
         return leaveNativeRepository.getLeaveCountsDatesByUser(userId);
     }
 
-    public Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId){
+    public Map<String, Double> getLeaveCategoriesCountsByUser(Long userId){
         return leaveNativeRepository.getLeaveCategoriesCountsByUser(userId);
+    }
+
+    @Override
+    public Map<String, Double> getEmployeeMonthlyLeaveCount(Long employeeId) {
+        return leaveNativeRepository.getEmployeeMonthlyLeaveCount(employeeId);
     }
 }

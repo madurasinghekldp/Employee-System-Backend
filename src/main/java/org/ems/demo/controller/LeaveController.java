@@ -42,7 +42,7 @@ public class LeaveController {
     @GetMapping("/all-by-user")
     @PermissionRequired(values = {"ROLE_EMP"})
     public ResponseEntity<SuccessResponse> getAllLeavesByUser(
-            @RequestParam(name="userId") Integer userId,
+            @RequestParam(name="userId") Long userId,
             @RequestParam(name="limit") int limit,
             @RequestParam(name="offset") int offset
     ){
@@ -85,7 +85,7 @@ public class LeaveController {
 
     @GetMapping("/user-leaves")
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> getLeaveCountsByDateByUser(@RequestParam(name="userId") Integer userId){
+    public ResponseEntity<SuccessResponse> getLeaveCountsByDateByUser(@RequestParam(name="userId") Long userId){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.getLeaveCountsDatesByUser(userId))
                 .build();
@@ -94,7 +94,7 @@ public class LeaveController {
 
     @GetMapping("/count")
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> getLeaveCountsByUser(@RequestParam(name="userId") Integer userId) {
+    public ResponseEntity<SuccessResponse> getLeaveCountsByUser(@RequestParam(name="userId") Long userId) {
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.getLeaveCountsByUser(userId))
                 .build();
@@ -103,9 +103,20 @@ public class LeaveController {
 
     @GetMapping("/user-leave-category-count")
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> getLeaveCategoriesCountsByUser(@RequestParam(name="userId") Integer userId){
+    public ResponseEntity<SuccessResponse> getLeaveCategoriesCountsByUser(@RequestParam(name="userId") Long userId){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(leaveService.getLeaveCategoriesCountsByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+
+    @GetMapping("/employee-monthly-leave-count")
+    @PermissionRequired(values = {"ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getEmployeeMonthlyLeaveCount(@RequestParam(name="employeeId") Long employeeId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                //.status(successStatus)
+                .data(leaveService.getEmployeeMonthlyLeaveCount(employeeId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

@@ -7,7 +7,7 @@ import java.io.IOException;
 public interface CloudinaryService {
     String uploadImage(MultipartFile path) throws IOException;
 
-    String uploadProfile(MultipartFile file, Integer userId);
+    String uploadProfile(MultipartFile file, Long userId);
 
     String uploadLogo(MultipartFile file, Long companyId);
 }

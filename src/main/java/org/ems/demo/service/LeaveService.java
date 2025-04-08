@@ -16,11 +16,13 @@ public interface LeaveService {
 
     void deleteLeave(Long id);
 
-    List<Leave> getAllLeavesByUser(Integer userId, int limit, int offset);
+    List<Leave> getAllLeavesByUser(Long userId, int limit, int offset);
     Map<String, Double> getLeaveCounts(Long companyId);
 
-    Integer getLeaveCountsByUser(Integer userId);
+    Integer getLeaveCountsByUser(Long userId);
 
-    Map<String,Double> getLeaveCountsDatesByUser(Integer userId);
-    Map<String, Double> getLeaveCategoriesCountsByUser(Integer userId);
+    Map<String,Double> getLeaveCountsDatesByUser(Long userId);
+    Map<String, Double> getLeaveCategoriesCountsByUser(Long userId);
+
+    Map<String,Double> getEmployeeMonthlyLeaveCount(Long employeeId);
 }

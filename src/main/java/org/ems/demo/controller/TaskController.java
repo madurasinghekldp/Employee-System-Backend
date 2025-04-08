@@ -42,7 +42,7 @@ public class TaskController {
     @GetMapping("/all-by-user")
     @PermissionRequired(values = {"ROLE_EMP"})
     public ResponseEntity<SuccessResponse> getAllTaskByUser(
-            @RequestParam(name="userId") Integer id,
+            @RequestParam(name="userId") Long id,
             @RequestParam(name="limit") int limit,
             @RequestParam(name="offset") int offset
     ){
@@ -96,7 +96,7 @@ public class TaskController {
 
     @GetMapping("/count")
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> getTaskCountsByUser(@RequestParam(name="userId") Integer userId) {
+    public ResponseEntity<SuccessResponse> getTaskCountsByUser(@RequestParam(name="userId") Long userId) {
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(taskService.getTaskCountsByUser(userId))
                 .build();
@@ -105,9 +105,27 @@ public class TaskController {
 
     @GetMapping("/get-by-status-user")
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> getTaskByStatusByUser(@RequestParam(name="userId") Integer userId){
+    public ResponseEntity<SuccessResponse> getTaskByStatusByUser(@RequestParam(name="userId") Long userId){
         SuccessResponse successResponse = SuccessResponse.builder()
                 .data(taskService.getTaskByStatusByUser(userId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/employee-monthly-rejected-tasks")
+    @PermissionRequired(values = {"ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getEmployeeMonthlyRejectedTasks(@RequestParam(name="employeeId") Long employeeId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getEmployeeMonthlyRejectedTasks(employeeId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
+    @GetMapping("/employee-monthly-late-tasks")
+    @PermissionRequired(values = {"ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getEmployeeMonthlyLateTasks(@RequestParam(name="employeeId") Long employeeId){
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(taskService.getEmployeeMonthlyLateTasks(employeeId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

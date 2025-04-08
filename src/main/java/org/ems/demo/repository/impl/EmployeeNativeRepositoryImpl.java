@@ -53,7 +53,7 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                     );
 
                     UserEntity user = new UserEntity(
-                            rs.getInt("u.id"),
+                            rs.getLong("u.id"),
                             rs.getString("u.first_name"),
                             rs.getString("u.last_name"),
                             rs.getString("u.email"),

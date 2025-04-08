@@ -13,6 +13,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class UserRolesAtId implements Serializable {
-    private Integer userId;
-    private Integer roleId;
+    private Long userId;
+    private Long roleId;
 }
