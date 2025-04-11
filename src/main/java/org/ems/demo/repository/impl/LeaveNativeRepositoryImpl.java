@@ -41,6 +41,8 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                             null,
                             null,
                             null,
+                            null,
+                            null,
                             true,
                             null
                     );
@@ -84,6 +86,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                             null,
                             null,
                             null,
+                            null,null,
                             true,
                             null
                     );

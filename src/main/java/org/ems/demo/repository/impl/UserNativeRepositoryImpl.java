@@ -7,6 +7,8 @@ import org.ems.demo.repository.UserNativeRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class UserNativeRepositoryImpl implements UserNativeRepository {
@@ -46,11 +48,44 @@ public class UserNativeRepositoryImpl implements UserNativeRepository {
                             null,
                             null,
                             null,
+                            null,
+                            null,
                             true,
                             rs.getString("u.profile_image")
                     );
                 },
                 email
+        );
+    }
+
+    @Override
+    public List<UserEntity> getCompanyUsers(Long companyId) {
+        String sql = """
+                select u.id,u.first_name,u.last_name from users u\s
+                inner join user_roles_at ur on u.id = ur.user_id\s
+                inner join user_roles r on ur.role_id = r.id\s
+                where u.company_id = ? and r.name != 'ROLE_EMP'
+                """;
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    return new UserEntity(
+                            rs.getLong("u.id"),
+                            rs.getString("u.first_name"),
+                            rs.getString("u.last_name"),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,null,
+                            true,
+                            null
+                    );
+                },companyId
         );
     }
 }

@@ -7,13 +7,11 @@ import org.ems.demo.dto.Task;
 import org.ems.demo.dto.TaskByUser;
 import org.ems.demo.dto.User;
 import org.ems.demo.entity.EmployeeEntity;
+import org.ems.demo.entity.NotificationEntity;
 import org.ems.demo.entity.TaskEntity;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.exception.TaskException;
-import org.ems.demo.repository.EmployeeRepository;
-import org.ems.demo.repository.TaskNativeRepository;
-import org.ems.demo.repository.TaskRepository;
-import org.ems.demo.repository.UserRepository;
+import org.ems.demo.repository.*;
 import org.ems.demo.service.EmailService;
 import org.ems.demo.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -35,13 +33,20 @@ public class TaskServiceImpl implements TaskService {
     private final EmailService emailService;
     private final ObjectMapper mapper;
     private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(Task task, Long userId) {
 
         try{
             Optional<EmployeeEntity> employee = employeeRepository.findById(task.getEmployee().getId());
             if(employee.isEmpty()) throw new TaskException("Employee is not found!");
+
+            UserEntity fromUser = userRepository.findById(userId).get();
+            UserEntity toUser = employee.get().getUser();
+            String message = String.format("%s %s has assigned you a task.", fromUser.getFirstName(), fromUser.getLastName());
+            notificationRepository.save(new NotificationEntity(null,fromUser,toUser,message,false));
+
             TaskEntity taskEntity = mapper.convertValue(task, TaskEntity.class);
             taskEntity.setEmployee(employee.get());
             TaskEntity saved = taskRepository.save(taskEntity);

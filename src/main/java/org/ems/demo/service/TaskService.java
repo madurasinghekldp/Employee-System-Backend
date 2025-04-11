@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TaskService {
-    Task createTask(Task task);
+    Task createTask(Task task,Long userId);
 
     List<Task> getAllTask(Long employeeId, int limit, int offset);
     List<Task> getAllTaskByUser(Long userId, int limit, int offset);

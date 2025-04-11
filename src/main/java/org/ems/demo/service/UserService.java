@@ -221,4 +221,14 @@ public class UserService {
             throw new UserException("Password is not updated!");
         }
     }
+
+    public List<User> getCompanyUsers(Long companyId) {
+        List<UserEntity> userEntities = userNativeRepository.getCompanyUsers(companyId);
+        List<User> users = new ArrayList<>();
+        userEntities.forEach(userEntity->{
+            User mappeduser = mapper.convertValue(userEntity, User.class);
+            users.add(mappeduser);
+        });
+        return users;
+    }
 }

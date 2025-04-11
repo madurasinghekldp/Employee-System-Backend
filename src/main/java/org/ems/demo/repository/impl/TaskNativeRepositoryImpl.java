@@ -44,6 +44,8 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                             null,
                             null,
                             null,
+                            null,
+                            null,
                             true,
                             null
                     );
@@ -92,6 +94,7 @@ public class TaskNativeRepositoryImpl implements TaskNativeRepository {
                             null,
                             null,
                             null,
+                            null,null,
                             true,
                             null
                     );

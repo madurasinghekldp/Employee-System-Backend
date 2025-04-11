@@ -730,3 +730,13 @@ d
 4src/main/java/org/ems/demo/entity/UserRolesAtId.java,5\0\50292927e2e92a1fa805cdc9e51801d6554e644d
 b
 2src/main/java/org/ems/demo/entity/UserRolesAt.java,e\8\e88cba482d6f7325ce0db9fd72f26c0aca2f1c1e
+i
+9src/main/java/org/ems/demo/entity/NotificationEntity.java,5\5\5596ce19175754c80de74d34f5e1d23638d6aa69
+q
+Asrc/main/java/org/ems/demo/repository/NotificationRepository.java,0\6\06eb7b62878a29108757306a27c694f589f23e4c
+q
+Asrc/main/java/org/ems/demo/controller/NotificationController.java,1\2\129776c7604548953e731e4f944f4e8be7a40b7b
+k
+;src/main/java/org/ems/demo/service/NotificationService.java,c\4\c4da3a35ce6d8e68e43d3882e72ad827f9c439b8
+t
+Dsrc/main/java/org/ems/demo/service/impl/NotificationServiceImpl.java,e\2\e230f1a1b0286f1a8f4afc47a982ee9368c631b1

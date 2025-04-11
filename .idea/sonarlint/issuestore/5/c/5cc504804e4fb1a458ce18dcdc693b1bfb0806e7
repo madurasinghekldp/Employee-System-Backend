@@ -1,9 +1,13 @@
 
 l
-java:S19487")Make "company" transient or serializable.(£Ú8•‰—äŞ2J$6987ea58-3110-4d7a-9823-83a8e7459a8b
+java:S19487")Make "company" transient or serializable.(£Ú8ÄÍ€„â2J$133f4d17-b15c-4f3f-93b7-625f1754d89c
 i
-java:S1948C"'Make "tasks" transient or serializable.(ú–á28Æ¼«ÃŞ2J$22907215-cf43-4541-9248-803292ec4e08
+java:S1948C"'Make "tasks" transient or serializable.(ú–á28ÄÍ€„â2J$798fea5a-13e0-423a-9c1d-46bb08174329
 p
-java:S1948G"(Make "leaves" transient or serializable.(ã½œäÿÿÿÿÿ8Ç¼«ÃŞ2J$d5237dc1-59a6-4f25-938c-30f9119edc6b
+java:S1948G"(Make "leaves" transient or serializable.(ã½œäÿÿÿÿÿ8ÅÍ€„â2J$9e4145da-0308-4b7a-b330-6849669f1639
+v
+java:S1948K"3Make "fromNotifications" transient or serializable.( …ø¿8ª°¬™â2J$481ff8ef-89e6-4e8b-b3db-c3ffe0719990
+y
+java:S1948O"1Make "toNotifications" transient or serializable.(‡ÖÒşÿÿÿÿ8ª°¬™â2J$812d6a58-1bd6-4540-9ba8-aff07fbfad45
 s
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¥‰—äŞ2J$0c451d49-8c4d-4ac5-b1eb-0c69eb8cc828
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¸°¬™â2J$977672f8-b6ab-4515-b474-9f17992ec5c0

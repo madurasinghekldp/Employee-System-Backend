@@ -19,9 +19,12 @@ public class TaskController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<SuccessResponse> createTask(@Valid @RequestBody Task task){
+    public ResponseEntity<SuccessResponse> createTask(
+            @Valid @RequestBody Task task,
+            @RequestParam(name = "userId") Long userId
+    ){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .data(taskService.createTask(task))
+                .data(taskService.createTask(task,userId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }

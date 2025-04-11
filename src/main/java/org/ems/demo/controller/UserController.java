@@ -42,6 +42,15 @@ public class UserController {
         return ResponseEntity.ok().body(successResponse);
     }
 
+    @GetMapping("/company")
+    @PermissionRequired(values = {"ROLE_EMP"})
+    public ResponseEntity<SuccessResponse> getCompanyUsers(@RequestParam(name = "companyId") Long companyId) {
+        SuccessResponse successResponse = SuccessResponse.builder()
+                .data(userService.getCompanyUsers(companyId))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
     @PostMapping()
     @PermissionRequired(values = {"ROLE_ADMIN"})
     public ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody RegisterUserDto user){

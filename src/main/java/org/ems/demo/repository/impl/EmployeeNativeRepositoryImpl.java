@@ -30,7 +30,7 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                 inner join users u on e.user_id = u.id\s
                 where e.company_id = ? and\s
                 u.is_active = true and\s
-                (u.email like ? or e.id like ? or u.first_name like ? or u.last_name like ?)\s
+                (u.email like ? or e.id like ? or u.first_name like ? or u.last_name like ? or d.name like ? or r.name like ?)\s
                 order by e.id desc limit ? offset ?
                 """;
         int limit = Integer.parseInt(l);
@@ -64,6 +64,8 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                             null,
                             null,
                             null,
+                            null,
+                            null,
                             true,
                             rs.getString("u.profile_image")
                     );
@@ -78,7 +80,7 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                     );
                 },
 
-                companyId,"%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%", limit, offset);
+                companyId,"%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%","%"+s+"%", limit, offset);
     }
 
     @Override

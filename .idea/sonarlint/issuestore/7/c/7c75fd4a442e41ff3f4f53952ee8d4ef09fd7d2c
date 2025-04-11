@@ -1,11 +1,11 @@
 
 ™
-java:S1192"PDefine a constant instead of duplicating this literal "User not found!" 3 times.(ãç‘ãùÿÿÿÿ8ô¤¼¸Ö2J$a15b6320-4e53-4f60-a23b-e7c10f2c0880
-m
-java:S3655Q"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(²õ¡‚8 ğ…²á2
-r
-java:S3655M"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ğ€Áªşÿÿÿÿ8 ğ…²á2
+java:S1192"PDefine a constant instead of duplicating this literal "User not found!" 3 times.(ãç‘ãùÿÿÿÿ8“‚ß™â2J$2f9b9e90-15fd-448e-a7ba-b2f7c454d3c3
+˜
+java:S3655M"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ğ€Áªşÿÿÿÿ8ä‚ß™â2J$0702f624-19c1-4872-9dff-035b76ca03d6
+“
+java:S3655Q"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(²õ¡‚8å‚ß™â2J$65f8cb58-a50a-4f37-9ba2-77286f812178
 •
-java:S3776K"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Øò˜“8ê¥¼¸Ö2J$1711cb7e-212e-461f-becf-5999082c9167
+java:S3776K"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Øò˜“8î‚ß™â2J$4cd29bf9-6240-4a9f-9dcd-e02f6a69a3b7
 K
-java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8Äğ…²á2
+java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8ù¤øŸâ2

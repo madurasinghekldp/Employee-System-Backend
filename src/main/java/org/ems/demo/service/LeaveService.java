@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeaveService {
-    Leave createLeave(LeaveByUser leave);
+    Leave createLeave(LeaveByUser leave,Long userId);
 
     List<Leave> getAllLeaves(Long employeeId,int limit,int offset);
 

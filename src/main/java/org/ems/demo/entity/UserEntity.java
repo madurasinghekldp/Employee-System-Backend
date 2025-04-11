@@ -70,6 +70,14 @@ public class UserEntity implements UserDetails {
     @JsonManagedReference(value = "user-leave")
     private List<LeaveEntity> leaves;
 
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "user-notification-from")
+    private List<NotificationEntity> fromNotifications;
+
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "user-notification-to")
+    private List<NotificationEntity> toNotifications;
+
     private boolean isActive = true;
 
     @Column(name = "profile_image")

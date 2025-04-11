@@ -8,12 +8,10 @@ import org.ems.demo.dto.LeaveByUser;
 import org.ems.demo.dto.User;
 import org.ems.demo.entity.EmployeeEntity;
 import org.ems.demo.entity.LeaveEntity;
+import org.ems.demo.entity.NotificationEntity;
 import org.ems.demo.entity.UserEntity;
 import org.ems.demo.exception.LeaveException;
-import org.ems.demo.repository.EmployeeRepository;
-import org.ems.demo.repository.LeaveNativeRepository;
-import org.ems.demo.repository.LeaveRepository;
-import org.ems.demo.repository.UserRepository;
+import org.ems.demo.repository.*;
 import org.ems.demo.service.EmailService;
 import org.ems.demo.service.LeaveService;
 import org.springframework.stereotype.Service;
@@ -36,9 +34,10 @@ public class LeaveServiceImpl implements LeaveService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final ObjectMapper mapper;
+    private final NotificationRepository notificationRepository;
 
     @Override
-    public Leave createLeave(LeaveByUser leave) {
+    public Leave createLeave(LeaveByUser leave,Long userId) {
         try{
             Optional<UserEntity> byId = userRepository.findById(leave.getUser().getId());
             if(byId.isEmpty()){
@@ -52,22 +51,35 @@ public class LeaveServiceImpl implements LeaveService {
             if(String.valueOf(leave.getLeaveType()).equals("ANNUAL")){
                 Double annuals = Double.valueOf(employeeEntity.get().getCompany().getAnnualLeaves());
                 Double annualTotal = leaveNativeRepository.getLeaveCountByUserAndType(byId.get().getId(), "ANNUAL");
+                if(annualTotal==null) annualTotal = 0.0;
                 if((annualTotal+leave.getDayCount())>annuals) throw new LeaveException("You are going to exceed available annual leave count.");
             }
             if(String.valueOf(leave.getLeaveType()).equals("CASUAL")){
                 Double casuals = Double.valueOf(employeeEntity.get().getCompany().getCasualLeaves());
                 Double casualTotal = leaveNativeRepository.getLeaveCountByUserAndType(byId.get().getId(), "CASUAL");
+                if(casualTotal==null) casualTotal = 0.0;
                 if((casualTotal+leave.getDayCount())>casuals) throw new LeaveException("You are going to exceed available casual leave count.");
             }
             LeaveEntity leaveEntity = mapper.convertValue(leave,LeaveEntity.class);
             leaveEntity.setDayCount(leave.getDayCount());
             leaveEntity.setEmployee(employeeEntity.get());
+
+            notificationRepository.save(
+                    new NotificationEntity(
+                            null,
+                            byId.get(),
+                            userRepository.findById(userId).get(),
+                            String.format("%s %s applied for a leave",byId.get().getFirstName(),byId.get().getLastName()),
+                            false
+                    )
+            );
             return mapper.convertValue(leaveRepository.save(leaveEntity), Leave.class);
         }
         catch(LeaveException e){
             throw e;
         }
         catch(Exception e){
+            log.info(e.toString());
             throw new LeaveException("Leave is not added!");
         }
     }

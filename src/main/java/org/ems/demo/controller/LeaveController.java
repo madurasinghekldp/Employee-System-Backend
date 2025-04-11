@@ -19,9 +19,12 @@ public class LeaveController {
 
     @PostMapping()
     @PermissionRequired(values = {"ROLE_EMP"})
-    public ResponseEntity<SuccessResponse> createLeave(@Valid @RequestBody LeaveByUser leave){
+    public ResponseEntity<SuccessResponse> createLeave(
+            @Valid @RequestBody LeaveByUser leave,
+            @RequestParam(name = "userId") Long userId
+    ){
         SuccessResponse successResponse = SuccessResponse.builder()
-                .data(leaveService.createLeave(leave))
+                .data(leaveService.createLeave(leave, userId))
                 .build();
         return ResponseEntity.ok().body(successResponse);
     }
