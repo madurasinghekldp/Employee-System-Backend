@@ -1,11 +1,11 @@
 
 —
-java:S1192Œ"NDefine a constant instead of duplicating this literal "Unknown error" 3 times.(œ¡‘úÿÿÿÿ8§Œã¦Ñ2J$cd477803-acc7-4b3b-9797-bce093df0902
+java:S1192•"NDefine a constant instead of duplicating this literal "Unknown error" 3 times.(œ¡‘úÿÿÿÿ8§Œã¦Ñ2J$6c9c18b6-2bad-44a6-a5e9-de72a55ac274
 
-java:S1192Á"LDefine a constant instead of duplicating this literal "description" 3 times.(Üïùµ8¨Œã¦Ñ2J$331dff4a-9fad-4a0c-8ee8-85e1ee7c6105
-¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(È´ûÖùÿÿÿÿ8½Œã¦Ñ2J$9eabdc11-44cc-4da0-abbe-8de967514c48
+java:S1192Ê"LDefine a constant instead of duplicating this literal "description" 3 times.(Üïùµ8¨Œã¦Ñ2J$2b4464b5-e870-4797-aafb-fb25f6a9d3b6
+¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(È´ûÖùÿÿÿÿ8½Œã¦Ñ2J$a25ff149-0cf0-41b2-a498-b2b3c2176a77
 •
-java:S6204r"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ÍŒã¦Ñ2J$fe3d8385-99d9-4665-90ab-b25ff11c4fae
-	java:S125"<This block of commented-out lines of code should be removed.(õ’»¼8ĞŒã¦Ñ2J$62ea46be-c7fe-49fd-8bd3-007986945f39
-	java:S125•"<This block of commented-out lines of code should be removed.(õ’»¼8ÑŒã¦Ñ2J$b5a4adb8-191c-4c09-935a-296386a9e5cc
-	java:S125©"<This block of commented-out lines of code should be removed.(õ’»¼8ÓŒã¦Ñ2J$fe6a6826-1925-4c2f-af1a-1fe17667f9c7
+java:S6204{"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ÍŒã¦Ñ2J$8cfe7526-e06c-4fcb-906c-9840b00bcde2
+	java:S125Š"<This block of commented-out lines of code should be removed.(õ’»¼8ĞŒã¦Ñ2J$4c2dbfec-500a-4df4-bbea-fce2d8a76d7f
+	java:S125"<This block of commented-out lines of code should be removed.(õ’»¼8ÑŒã¦Ñ2J$d6984b41-cdcb-4c12-9217-2a36be46abfc
+	java:S125²"<This block of commented-out lines of code should be removed.(õ’»¼8ÓŒã¦Ñ2J$72aadd06-9e28-4772-a9ae-864cfb5cfa4e

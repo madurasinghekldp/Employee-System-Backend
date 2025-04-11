@@ -73,6 +73,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.ok().body(errorResponse);
     }
 
+    @ExceptionHandler(NotificationException.class)
+    ResponseEntity<ErrorResponse> handleNotificationException(NotificationException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(failedStatus)
+                .message(ex.getMessage())
+                .build();
+        return ResponseEntity.ok().body(errorResponse);
+    }
+
     @ExceptionHandler(SalaryException.class)
     ResponseEntity<ErrorResponse> handleSalaryException(SalaryException ex){
         ErrorResponse errorResponse = ErrorResponse.builder()
