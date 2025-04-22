@@ -19,7 +19,6 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "org.ems.demo")
 public class SecurityConfiguration {
 
     @Value("${client.url}")
