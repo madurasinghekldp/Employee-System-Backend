@@ -17,4 +17,5 @@ public interface EmployeeService {
 
     Integer getCount(Long companyId);
 
+    Object getById(Long id);
 }

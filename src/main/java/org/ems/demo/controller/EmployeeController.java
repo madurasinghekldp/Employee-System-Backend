@@ -88,4 +88,15 @@ public class EmployeeController {
         return ResponseEntity.ok().body(successResponse);
     }
 
+    @GetMapping("/by-id")
+    @PermissionRequired(values = {"ROLE_ADMIN"})
+    public ResponseEntity<SuccessResponse> getEmployeeById(@RequestParam(name="id") Long id){
+        System.out.println("id = " + id);
+        SuccessResponse successResponse = SuccessResponse.builder()
+                //.status(successStatus)
+                .data(employeeService.getById(id))
+                .build();
+        return ResponseEntity.ok().body(successResponse);
+    }
+
 }

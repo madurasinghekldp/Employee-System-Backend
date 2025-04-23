@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -119,5 +120,27 @@ public class EmployeeNativeRepositoryImpl implements EmployeeNativeRepository {
                 select count(id) from employee where company_id = ?
                 """;
         return jdbcTemplate.queryForObject(sql,Integer.class,companyId);
+    }
+
+    @Override
+    public Map<String,String> getById(Long id) {
+        String sql = """
+                select u.first_name, u.last_name, u.profile_image from employee e\s
+                inner join users u on u.id = e.user_id\s
+                where e.id = ?
+                """;
+        List<Map<String, String>> query = jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    return Map.of(
+                            "firstName", rs.getString("u.first_name"),
+                            "lastName", rs.getString("u.last_name"),
+                            "profileImage", rs.getString("u.profile_image")
+                    );
+                },
+                id
+        );
+        System.out.println(query.get(0));
+        return query.get(0);
     }
 }

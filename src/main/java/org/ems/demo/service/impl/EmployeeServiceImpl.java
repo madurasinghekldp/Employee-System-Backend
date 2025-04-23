@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -134,5 +135,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Integer getCount(Long companyId) {
         return nativeRepository.getCount(companyId);
+    }
+
+    @Override
+    public Object getById(Long id) {
+        try{
+            return nativeRepository.getById(id);
+        }
+        catch(Exception e){
+            throw new EmployeeException("Employee is not found!");
+        }
     }
 }

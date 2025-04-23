@@ -1,0 +1,8 @@
+
+•
+java:S1192:"MDefine a constant instead of duplicating this literal "u.first_name" 3 times.( ËÆµûÿÿÿÿ8ÎÊ‡”æ2J$b1b85a9e-5edd-45e1-918d-b30c2f4e654f
+
+java:S1192;"LDefine a constant instead of duplicating this literal "u.last_name" 3 times.(±şÄÃ8ĞÊ‡”æ2J$a9d7a8b8-a30d-42f3-8a04-6b2e0f8bf2a6
+—
+java:S1602†"SRemove useless curly braces around statement and then remove useless return keyword(”¸¥Ë8¶”æ2J$db207647-b867-446b-a8e1-e6b2470734a0
+s	java:S106"+Replace this use of System.out by a logger.(–Æå™ıÿÿÿÿ8Æ’Ì”æ2J$90ce8ce3-a568-4aac-94b0-f87d5df363b5
