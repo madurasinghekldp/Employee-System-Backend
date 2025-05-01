@@ -207,7 +207,7 @@ public class LeaveNativeRepositoryImpl implements LeaveNativeRepository {
                 """;
         Double count = jdbcTemplate.queryForObject(sql, Double.class, employeeId);
         Map<String,Double> leaveCounts = new HashMap<>();
-        leaveCounts.put("leave_count",count);
+        leaveCounts.put("leave_count",count!=null?count:0.0);
         return leaveCounts;
     }
 }
